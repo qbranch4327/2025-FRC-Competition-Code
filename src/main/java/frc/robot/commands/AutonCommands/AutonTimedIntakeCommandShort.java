@@ -1,22 +1,22 @@
 package frc.robot.commands.AutonCommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralintakeSubsystem;
-import edu.wpi.first.wpilibj.Timer;
 
-public class AutonIntakeCommandLong extends Command {
+public class AutonTimedIntakeCommandShort extends Command {
     
     CoralintakeSubsystem intakeSubsystem;
     Timer timer;
 
-    public AutonIntakeCommandLong(CoralintakeSubsystem intakeSubsystem) {
+    public AutonTimedIntakeCommandShort(CoralintakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         timer = new Timer();
         addRequirements(intakeSubsystem);
     }
     
     @Override
-    public void initialize() {
+    public void initialize()    {
         timer.restart();
     }
 
@@ -27,7 +27,7 @@ public class AutonIntakeCommandLong extends Command {
 
     @Override
     public boolean isFinished() {
-        if (!intakeSubsystem.sensor.get() || timer.get() >= 7)  {
+        if (timer.get() >= 0.75)  {
             intakeSubsystem.intakeOff();
             return true;
         }

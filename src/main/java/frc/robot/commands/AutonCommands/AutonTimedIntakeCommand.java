@@ -27,7 +27,7 @@ public class AutonTimedIntakeCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 1)  {
+        if (timer.get() >= 2.5)  {
             intakeSubsystem.intakeOff();
             return true;
         }

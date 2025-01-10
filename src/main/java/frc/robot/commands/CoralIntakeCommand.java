@@ -17,10 +17,10 @@ public class CoralIntakeCommand extends Command {
 
     @Override
     public void execute()   {
-        if (controller2.getRightBumper())   {
+        if (controller2.getRightBumperButton())   {
             intakeSubsystem.intakeOn(true);
         }
-        else if (controller2.getLeftBumper())   {
+        else if (controller2.getLeftBumperButton())   {
             intakeSubsystem.intakeOn(false);
         }
         else if (controller2.getBackButton())   {

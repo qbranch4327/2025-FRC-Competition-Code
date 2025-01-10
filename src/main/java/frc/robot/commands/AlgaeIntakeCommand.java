@@ -19,13 +19,13 @@ public class AlgaeIntakeCommand extends Command {
 
     @Override
     public void execute()   {
-        if (controller2.getRightBumper() && !controller2.getStartButton())   {
+        if (controller2.getRightTriggerAxis() > 0.2)   {
             intakeSubsystem.AlgaeIntakeOn(true);
         }
-        else if (controller2.getLeftY() > .2 || controller2.getLeftY() < -.2)   {
+        else if (controller2.getRightTriggerAxis() > 0.2 && controller2.getLeftTriggerAxis() > 0.2) {
             intakeSubsystem.AlgaeIntakeSlow(false);
         }
-        else if (controller2.getBackButton())   {
+        else if (controller2.getLeftTriggerAxis() > 0.2)   {
             intakeSubsystem.AlgaeIntakeOn(false);
         }
         else    {

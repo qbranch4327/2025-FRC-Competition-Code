@@ -22,22 +22,21 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-//import frc.robot.commands.ClimberCommand;
+
 import frc.robot.commands.AlgaeIntakeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.CoralIntakeCommand;
-//import frc.robot.commands.RotationArmCommand;
-import frc.robot.commands.AutonCommands.AutonArmDownCommand;
-import frc.robot.commands.AutonCommands.AutonArmUpCommand;
-import frc.robot.commands.AutonCommands.AutonIndexCommand;
-import frc.robot.commands.AutonCommands.AutonIntakeCommand;
-import frc.robot.commands.AutonCommands.AutonIntakeCommandLong;
-import frc.robot.commands.AutonCommands.AutonPassOffCommand;
-import frc.robot.commands.AutonCommands.AutonShooterCommand;
-import frc.robot.commands.AutonCommands.AutonTiltLongCommand;
-import frc.robot.commands.AutonCommands.AutonTiltShortCommand;
+import frc.robot.commands.VisionCommand;
+
+import frc.robot.commands.AutonCommands.AutonHomeCommand;
+import frc.robot.commands.AutonCommands.AutonL1Command;
+import frc.robot.commands.AutonCommands.AutonL4Command;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
+import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
+import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
+import frc.robot.commands.AutonCommands.AutonIntakeOnCommand;
+
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.CoralintakeSubsystem;
@@ -118,23 +117,15 @@ public class RobotContainer {
     this.eSub = new ElevatorSubsystem();
     this.aSub = new AlgaeIntakeSubsystem();
 
-    NamedCommands.registerCommand("AutonArmDownCommand", new AutonArmDownCommand(rSub, wSub));
-    NamedCommands.registerCommand("AutonArmUpCommand", new AutonArmUpCommand(rSub, wSub));
-    NamedCommands.registerCommand("AutonIntakeCommand", new AutonIntakeCommand(iSub));
-    NamedCommands.registerCommand("AutonIntakeCommandLong", new AutonIntakeCommandLong(iSub));
+    NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(rSub, eSub));
+    NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(rSub, eSub));
+    NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(rSub, eSub));
     NamedCommands.registerCommand("AutonTimedIntakeCommand", new AutonTimedIntakeCommand(iSub));
-    // NamedCommands.registerCommand("AutonServoCommand", new AutonServoCommand(sSub));
+    NamedCommands.registerCommand("AutonTimedIntakeCommandShort", new AutonTimedIntakeCommandShort(iSub));
+    NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(iSub));
+    NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOffCommand(iSub));
     NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
     NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
-    // NamedCommands.registerCommand("AutonShoot", AutonShoot());
-    // NamedCommands.registerCommand("AutonShootAmp", AutonShootAmp());
-    // NamedCommands.registerCommand("AutonShootOff", AutonShootOff());
-    // NamedCommands.registerCommand("AutonIndexOff", AutonIndexOff());
-    // NamedCommands.registerCommand("AutonPassOff", new AutonPassOffCommand(iSub, nsSub, wSub, rSub));
-    // NamedCommands.registerCommand("AutonIndex", new AutonIndexCommand(nsSub));
-    // NamedCommands.registerCommand("AutonIndexMax", AutonIndexMax());
-    // NamedCommands.registerCommand("AutonTiltLongCommand", new AutonTiltLongCommand(nsSub));
-    // NamedCommands.registerCommand("AutonTiltShortCommand", new AutonTiltShortCommand(nsSub));
 
     autoChooser = AutoBuilder.buildAutoChooser("Auto Calibration 2m");
     SmartDashboard.putData("Auto Mode", autoChooser);
