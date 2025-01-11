@@ -38,7 +38,7 @@ import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
 import frc.robot.commands.AutonCommands.AutonIntakeOnCommand;
 
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.SwerveDrivetrainSubsystem;
 import frc.robot.subsystems.CoralintakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ExtendoSubsystem;
@@ -54,7 +54,7 @@ public class RobotContainer {
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
   private final XboxController driver3 = new XboxController(1);
-  public final CommandSwerveDrivetrain commandSwerveDrivetrain = TunerConstants.createDrivetrain();
+  public final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
