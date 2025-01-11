@@ -1,32 +1,25 @@
 package frc.robot.subsystems;
 
-// import com.revrobotics.CANSparkLowLevel.MotorType;
-// import com.revrobotics.CANSparkFlex;
-// import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.*;
-
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
 
-public class AlgaeWristSubsystem extends SubsystemBase   {
-    SparkFlex wristMotor;
-    DutyCycleEncoder wristEncoder;
+public class AlgaeWristSubsystem extends SubsystemBase {
+    private SparkFlex wristMotor;
+    private DutyCycleEncoder wristEncoder;
     private final double rangeOffset = RobotConstants.AlgaeWristrangeOffset;
     private final double encoderOffset = RobotConstants.AlgaeWristencoderOffset;
-    SparkFlexConfig wristmotorConfig;
+    private SparkFlexConfig wristmotorConfig;
+    private Encoder wristQuadEncoder;
 
     public AlgaeWristSubsystem() {
         wristMotor = new SparkFlex(RobotConstants.AlgaeWristmotorCANid, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
         wristEncoder = new DutyCycleEncoder(RobotConstants.AlgaeWristEncoderDIOid);
-
-        // SparkPIDController wristmotorPID = wristMotor.getPIDController();
-        // wristmotorConfig.closedLoop.pid(RobotConstants.intakemotorP, RobotConstants.intakemotorI, RobotConstants.intakemotorD);
-
+        wristQuadEncoder = new Encoder(RobotConstants.AlagaeWristQuadEncoder1,  RobotConstants.AlagaeWristQuadEncoder2);
     }
 
     public void goTo(double encoderGoal, double extremaValue)  {
@@ -92,5 +85,6 @@ public class AlgaeWristSubsystem extends SubsystemBase   {
     @Override
     public void periodic()  {
         SmartDashboard.putNumber("Algae Wrist Encoder", (wristEncoder.get()));
+        SmartDashboard.putNumber("Algae Wrist Quad Encoder", (wristQuadEncoder.get()));
     }
 }

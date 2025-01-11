@@ -48,75 +48,73 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 
 public class RobotContainer {
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+  // kSpeedAt12Volts desired top speed
+  private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+  // 3/4 of a rotation per second max angular velocity
+  private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
+  private final CommandJoystick joystick = new CommandJoystick(0);
+  private final XboxController driver3 = new XboxController(1);
+  public final CommandSwerveDrivetrain commandSwerveDrivetrain = TunerConstants.createDrivetrain();
 
-    private final CommandJoystick joystick = new CommandJoystick(0);
-    private final Joystick joystick3 = new Joystick(0);
-    private final CommandXboxController driver2 = new CommandXboxController(1);
-    private final XboxController driver3 = new XboxController(1);
+  /* Setting up bindings for necessary control of the swerve drive platform */
+  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(MaxSpeed * 0.1)
+      .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+  private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  private final CoralintakeSubsystem iSub;
+  private final AlgaeWristSubsystem wristSubsystem;
+  private final VisionSubsystem vSub;
+  private final ExtendoSubsystem rSub;
+  private final LEDSubsystem lSub;
+  private final ElevatorSubsystem eSub;
+  private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
 
-    private final Telemetry logger = new Telemetry(MaxSpeed);
+  private void configureBindings() {
+    joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
+    joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
+        () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
 
-    private final CoralintakeSubsystem iSub;
-    private final AlgaeWristSubsystem wSub;
-    private final VisionSubsystem vSub;
-    private final ExtendoSubsystem rSub;
-    private final LEDSubsystem lSub;
-    private final ElevatorSubsystem eSub;
-    private final AlgaeIntakeSubsystem aSub;
+    // Run SysId routines when holding back/start and X/Y.
+    // Note that each routine should be run exactly once in a single log.
+    joystick.button(1).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kForward));
+    joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
+    joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
+    joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
 
-    private void configureBindings() {
-      // Note that X is defined as forward according to WPILib convention,
-      // and Y is defined as to the left according to WPILib convention.
-      drivetrain.setDefaultCommand(
-          // Drivetrain will execute this command periodically
-          drivetrain.applyRequest(() ->
-              drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed) // Drive forward with negative Y (forward)
-                  .withVelocityY(joystick.getRawAxis(3) * MaxSpeed) // Drive left with negative X (left)
-                  .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate) // Drive counterclockwise with negative X (left)
-          )
-      );
+    // reset the field-centric heading on left bumper press
+    joystick.button(13).onTrue(commandSwerveDrivetrain.runOnce(() -> commandSwerveDrivetrain.seedFieldCentric()));
 
-      joystick.button(13).whileTrue(drivetrain.applyRequest(() -> brake));
-      joystick.button(14).whileTrue(drivetrain.applyRequest(() ->
-          point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))
-      ));
+    commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
+  }
 
-      // Run SysId routines when holding back/start and X/Y.
-      // Note that each routine should be run exactly once in a single log.
-      joystick.button(1).and(joystick.button(12)).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-      joystick.button(1).and(joystick.button(11)).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-      joystick.button(3).and(joystick.button(12)).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-      joystick.button(3).and(joystick.button(11)).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+  private final SendableChooser<Command> autoChooser;
 
-      // reset the field-centric heading on left bumper press
-      joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
-      drivetrain.registerTelemetry(logger::telemeterize);
-  } 
-
-    private final SendableChooser<Command> autoChooser;
-
-    public RobotContainer() {
-
+  public RobotContainer() {
     this.iSub = new CoralintakeSubsystem();
-    this.wSub = new AlgaeWristSubsystem();
+    this.wristSubsystem = new AlgaeWristSubsystem();
     this.vSub = new VisionSubsystem();
     this.rSub = new ExtendoSubsystem();
     this.lSub = new LEDSubsystem();
     this.eSub = new ElevatorSubsystem();
-    this.aSub = new AlgaeIntakeSubsystem();
+    this.algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
 
+    // Note that X is defined as forward according to WPILib convention,
+    // and Y is defined as to the left according to WPILib convention.
+    commandSwerveDrivetrain.setDefaultCommand(
+        // Drivetrain will execute this command periodically
+        // Drive forward with negative Y (forward)
+        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
+            // Drive left with negative X (left)
+            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
+            // Drive counterclockwise with negative X (left)
+            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+
+    commandSwerveDrivetrain.getKinematics().resetHeadings(Rotation2d.kZero);
     NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(rSub, eSub));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(rSub, eSub));
     NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(rSub, eSub));
@@ -130,52 +128,54 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser("Auto Calibration 2m");
     SmartDashboard.putData("Auto Mode", autoChooser);
 
-    aSub.setDefaultCommand(new AlgaeIntakeCommand(aSub, wSub, driver3));
+    algaeIntakeSubsystem.setDefaultCommand(new AlgaeIntakeCommand(algaeIntakeSubsystem, wristSubsystem, driver3));
     eSub.setDefaultCommand(new ElevatorCommand(eSub, rSub, driver3));
     iSub.setDefaultCommand(new CoralIntakeCommand(iSub, driver3));
     lSub.setDefaultCommand(new LEDCommand(lSub, driver3, iSub));
     // vSub.setDefaultCommand(new VisionCommand);
 
-      configureBindings();
-    }
+    configureBindings();
+  }
 
   public Command getAutonomousCommand() {
     /* First put the drivetrain into auto run mode, then run the auto */
     return autoChooser.getSelected();
   }
 
-  public Command AutonIntakeOn()
-  {
-    return new InstantCommand(()->{iSub.intakeOn(true);});
+  public Command AutonIntakeOn() {
+    return new InstantCommand(() -> {
+      iSub.intakeOn(true);
+    });
   }
 
-  public Command AutonIntakeOff()
-  {
-    return new InstantCommand(()->{iSub.intakeOff();});
+  public Command AutonIntakeOff() {
+    return new InstantCommand(() -> {
+      iSub.intakeOff();
+    });
   }
 
   // public Command AutonShoot()
   // {
-  //   return new InstantCommand(()->{nsSub.newshooterOn();});
+  // return new InstantCommand(()->{nsSub.newshooterOn();});
   // }
 
   // public Command AutonShootAmp()
   // {
-  //   return new InstantCommand(()->{nsSub.newshooterOn();});
+  // return new InstantCommand(()->{nsSub.newshooterOn();});
   // }
 
   // public Command AutonShootOff()
   // {
-  //   return new InstantCommand(()->{nsSub.newstopshooter();});
+  // return new InstantCommand(()->{nsSub.newstopshooter();});
   // }
 
   // public Command AutonIndexMax()
   // {
-  //   return new InstantCommand(()->{nsSub.indexMaxAuton(true);});
+  // return new InstantCommand(()->{nsSub.indexMaxAuton(true);});
   // }
 
   // public Command AutonIndexOff()
   // {
-  //   return new InstantCommand(()->{nsSub.indexOff();});
+  // return new InstantCommand(()->{nsSub.indexOff();});
   // }
 }

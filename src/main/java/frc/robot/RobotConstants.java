@@ -40,6 +40,8 @@ public class RobotConstants {
     //CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the Algae Intake in/out of robot
     public final static int AlgaeWristmotorCANid = 25;
     public final static int AlgaeWristEncoderDIOid = 1;
+    public final static int AlagaeWristQuadEncoder1 = 8;
+    public final static int AlagaeWristQuadEncoder2 = 9;
 
     //Algae Wrist PID Values for Motors
     public final static double AlgaeWristmotorP = 0;
