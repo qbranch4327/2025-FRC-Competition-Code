@@ -6,9 +6,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class VisionSubsystem extends SubsystemBase{
-    private final double limelightMountAngle = 0;   // In radians
-    private final double limelightMountHeight = 0;  // In 
+public class VisionSubsystem extends SubsystemBase {
+    // In radians
+    private final double limelightMountAngle = 0;
+    private final double limelightMountHeight = 0;
     public double x;
     public double y;
     public NetworkTableEntry tx;
@@ -35,7 +36,4 @@ public class VisionSubsystem extends SubsystemBase{
     public double distanceFromTarget(double targetHeight) {
         return (targetHeight - limelightMountHeight) / Math.tan(y + limelightMountAngle);
     }
-
-    
 }
-   

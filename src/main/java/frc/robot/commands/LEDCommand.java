@@ -11,22 +11,19 @@ public class LEDCommand extends Command {
     CoralintakeSubsystem intakeSubsystem;
     XboxController controller2;
 
-    public LEDCommand(LEDSubsystem ledSubsystem, XboxController controller2, CoralintakeSubsystem intakeSubsystem)    {
+    public LEDCommand(LEDSubsystem ledSubsystem, XboxController controller2, CoralintakeSubsystem intakeSubsystem) {
         this.ledSubsystem = ledSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.controller2 = controller2;
         addRequirements(ledSubsystem);
     }
-    
+
     @Override
-    public void execute()   {
+    public void execute() {
         if (!intakeSubsystem.sensor.get()) {
             ledSubsystem.set(RobotConstants.LEDintakesensor);
         }
-        // else if (!shooterSubsystem.sensor.get()) {
-        //     ledSubsystem.set(RobotConstants.LEDshootersensor);
-        // }
-        else    {
+        else {
             ledSubsystem.set(RobotConstants.LEDdefault);
         }
     }

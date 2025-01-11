@@ -7,11 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SetDefaultWheelsSubsystem extends SubsystemBase {
-  /** Creates a new SetDefaultWheelsSubsystem. */
-  public SetDefaultWheelsSubsystem() {}
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public SetDefaultWheelsSubsystem() {
   }
 }

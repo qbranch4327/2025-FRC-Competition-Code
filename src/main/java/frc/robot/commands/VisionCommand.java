@@ -6,20 +6,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class VisionCommand extends Command {
     VisionSubsystem visionSubsystem;
-    //Swerve swerve;
     XboxController controller2;
 
-    public VisionCommand(VisionSubsystem visionSubsystem, XboxController controller2)    {
+    public VisionCommand(VisionSubsystem visionSubsystem, XboxController controller2) {
         this.visionSubsystem = visionSubsystem;
-       // this.swerve = swerve;
         this.controller2 = controller2;
         addRequirements(visionSubsystem);
-       // addRequirements(swerve);
     }
 
-    public void autoAim()   {
-       // swerve.rotateTo(visionSubsystem.x);
-        //swerve.xStance();
+    public void autoAim() {
     }
-
 }

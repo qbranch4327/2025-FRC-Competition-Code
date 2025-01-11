@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,77 +12,77 @@ public class AlgaeWristSubsystem extends SubsystemBase {
     private DutyCycleEncoder wristEncoder;
     private final double rangeOffset = RobotConstants.AlgaeWristrangeOffset;
     private final double encoderOffset = RobotConstants.AlgaeWristencoderOffset;
-    private SparkFlexConfig wristmotorConfig;
     private Encoder wristQuadEncoder;
 
     public AlgaeWristSubsystem() {
-        wristMotor = new SparkFlex(RobotConstants.AlgaeWristmotorCANid, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+        wristMotor = new SparkFlex(RobotConstants.AlgaeWristmotorCANid,
+                com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
         wristEncoder = new DutyCycleEncoder(RobotConstants.AlgaeWristEncoderDIOid);
-        wristQuadEncoder = new Encoder(RobotConstants.AlagaeWristQuadEncoder1,  RobotConstants.AlagaeWristQuadEncoder2);
+        wristQuadEncoder = new Encoder(RobotConstants.AlagaeWristQuadEncoder1, RobotConstants.AlagaeWristQuadEncoder2);
     }
 
-    public void goTo(double encoderGoal, double extremaValue)  {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1)   {
+    public void goTo(double encoderGoal, double extremaValue) {
+        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
-        }
-        else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1)    {
+        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
-        }
-        else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1)  {
+        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
-        }
-        else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1)  {
+        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
-        }
-        else    {
+        } else {
             this.stop();
         }
     }
 
-    public boolean wentTo(double encoderGoal, double extremaValue)  {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1)   {
+    public boolean wentTo(double encoderGoal, double extremaValue) {
+        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
             return false;
-        }
-        else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1)    {
+        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
             return false;
-        }
-        else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1)  {
+        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
             return false;
-        }
-        else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1 && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1)  {
+        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
+                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
             return false;
-        }
-        else    {
+        } else {
             this.stop();
             return true;
         }
     }
 
-    public void extend()   {
+    public void extend() {
         wristMotor.set(RobotConstants.AlgaeWristExtendpower);
     }
 
-    public void retract()    {
+    public void retract() {
         wristMotor.set(RobotConstants.AlgaeWristRetractpower);
     }
 
-    public void stop()  {
+    public void stop() {
         wristMotor.stopMotor();
     }
 
-    public boolean encoderCheck(double distance)    {
-        if (wristEncoder.get() == distance)  {
+    public boolean encoderCheck(double distance) {
+        if (wristEncoder.get() == distance) {
             return true;
         }
         return false;
     }
 
     @Override
-    public void periodic()  {
+    public void periodic() {
         SmartDashboard.putNumber("Algae Wrist Encoder", (wristEncoder.get()));
         SmartDashboard.putNumber("Algae Wrist Quad Encoder", (wristQuadEncoder.get()));
     }

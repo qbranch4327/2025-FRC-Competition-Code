@@ -5,8 +5,7 @@ import frc.robot.RobotConstants;
 import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class AutonL4Command extends Command    {
-    
+public class AutonL4Command extends Command {
     ExtendoSubsystem extendoSubsystem;
     ElevatorSubsystem elevatorSubsystem;
     boolean isItFinished;
@@ -21,14 +20,14 @@ public class AutonL4Command extends Command    {
     }
 
     @Override
-    public void initialize()    {
+    public void initialize() {
         isItFinished = false;
         extendoFinished = false;
         elevatorFinished = false;
     }
 
     @Override
-    public void execute()   {
+    public void execute() {
         if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtend)) {
             extendoSubsystem.stop();
             extendoFinished = true;
@@ -46,5 +45,4 @@ public class AutonL4Command extends Command    {
     public boolean isFinished() {
         return isItFinished;
     }
-
 }
