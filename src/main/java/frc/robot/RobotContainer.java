@@ -15,11 +15,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
@@ -27,16 +25,12 @@ import frc.robot.commands.AlgaeIntakeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.CoralIntakeCommand;
-import frc.robot.commands.VisionCommand;
-
 import frc.robot.commands.AutonCommands.AutonHomeCommand;
 import frc.robot.commands.AutonCommands.AutonL1Command;
 import frc.robot.commands.AutonCommands.AutonL4Command;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
 import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
-import frc.robot.commands.AutonCommands.AutonIntakeOnCommand;
-
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.SwerveDrivetrainSubsystem;
 import frc.robot.subsystems.CoralintakeSubsystem;
@@ -114,7 +108,6 @@ public class RobotContainer {
             // Drive counterclockwise with negative X (left)
             .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
 
-    commandSwerveDrivetrain.getKinematics().resetHeadings(Rotation2d.kZero);
     NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(rSub, eSub));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(rSub, eSub));
     NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(rSub, eSub));

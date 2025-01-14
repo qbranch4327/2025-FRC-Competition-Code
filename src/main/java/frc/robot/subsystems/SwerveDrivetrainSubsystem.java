@@ -6,8 +6,11 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -28,6 +31,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 // import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -279,6 +283,10 @@ public class SwerveDrivetrainSubsystem extends TunerSwerveDrivetrain implements 
                                 : kBlueAlliancePerspectiveRotation);
                 hasAppliedOperatorPerspective = true;
             });
+        }
+
+        for (SwerveModule<TalonFX, TalonFX, CANcoder> module : this.getModules()) {
+            SmartDashboard.putNumber("Algae Wrist Quad Encoder " + module.hashCode(), module.getEncoder().getAbsolutePosition().getValueAsDouble());
         }
     }
 
