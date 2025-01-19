@@ -22,6 +22,7 @@ public class AutonTimedIntakeCommandShort extends Command {
     @Override
     public void execute() {
         intakeSubsystem.intakeOn(true);
+                
     }
 
     @Override

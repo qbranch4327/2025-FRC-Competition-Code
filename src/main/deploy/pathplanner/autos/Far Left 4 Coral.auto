@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left A1 - Start to L1 Drop"
+            "pathName": "Far Left A1 - Start to K"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left A2 - L1 to Feed"
+            "pathName": "Far Left A2 - K to Feed"
           }
         },
         {
@@ -29,13 +35,19 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left A3 - Feed to L"
+                  "pathName": "Far Left A3 - Feed to L"
                 }
               },
               {
@@ -54,13 +66,81 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left A4 - L to Feed"
+                  "pathName": "Far Left A4 - L to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Left A5 - Feed to K(4)"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Left A6 - K(4) to Feed"
                 }
               },
               {
@@ -79,13 +159,19 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left A5 - Feed to K"
+                  "pathName": "Far Left A7 - Feed to A"
                 }
               },
               {
@@ -104,53 +190,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left A6 - K to Feed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonHomeCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left A7 - Feed to A"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonL4Command"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "waitTime": 0.5
           }
         },
         {

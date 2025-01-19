@@ -84,6 +84,6 @@ public class AlgaeWristSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Algae Wrist Encoder", (wristEncoder.get()));
-        SmartDashboard.putNumber("Algae Wrist Quad Encoder", (wristQuadEncoder.get()));
+        // SmartDashboard.putNumber("Algae Wrist Quad Encoder", (wristQuadEncoder.get()));
     }
 }

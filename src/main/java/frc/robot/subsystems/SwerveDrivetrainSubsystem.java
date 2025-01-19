@@ -285,9 +285,9 @@ public class SwerveDrivetrainSubsystem extends TunerSwerveDrivetrain implements 
             });
         }
 
-        for (SwerveModule<TalonFX, TalonFX, CANcoder> module : this.getModules()) {
-            SmartDashboard.putNumber("Algae Wrist Quad Encoder " + module.hashCode(), module.getEncoder().getAbsolutePosition().getValueAsDouble());
-        }
+        // for (SwerveModule<TalonFX, TalonFX, CANcoder> module : this.getModules()) {
+        //     SmartDashboard.putNumber("Algae Wrist Quad Encoder " + module.hashCode(), module.getEncoder().getAbsolutePosition().getValueAsDouble());
+        // }
     }
 
     private void startSimThread() {

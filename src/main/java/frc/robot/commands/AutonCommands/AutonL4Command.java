@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotConstants;
 import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutonL4Command extends Command {
     ExtendoSubsystem extendoSubsystem;
@@ -11,8 +12,10 @@ public class AutonL4Command extends Command {
     boolean isItFinished;
     boolean extendoFinished;
     boolean elevatorFinished;
+    Timer timer;
 
     public AutonL4Command(ExtendoSubsystem extendoSubsystem, ElevatorSubsystem elevatorSubsystem) {
+        timer = new Timer();
         this.extendoSubsystem = extendoSubsystem;
         this.elevatorSubsystem = elevatorSubsystem;
         addRequirements(extendoSubsystem);
@@ -24,15 +27,17 @@ public class AutonL4Command extends Command {
         isItFinished = false;
         extendoFinished = false;
         elevatorFinished = false;
+        timer.restart();
+
     }
 
     @Override
     public void execute() {
-        if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtend)) {
+        if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtend) || timer.get() > 2.5) {
             extendoSubsystem.stop();
             extendoFinished = true;
         }
-        if (!elevatorFinished && elevatorSubsystem.wentTo(RobotConstants.L4Value, RobotConstants.L4HighExtreme)) {
+        if (!elevatorFinished && elevatorSubsystem.wentTo(RobotConstants.L4Value, RobotConstants.L4HighExtreme) || timer.get() > 2.5) {
             elevatorSubsystem.stop();
             elevatorFinished = true;
         }
