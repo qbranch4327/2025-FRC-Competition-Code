@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkFlexExternalEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -9,30 +11,30 @@ import frc.robot.RobotConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
     SparkFlex ElevatorMotor;
-    Encoder ElevatorEncoder;
+    RelativeEncoder ElevatorEncoder;
     private final double rangeOffset = RobotConstants.ElevatorRangeOffset;
     private final double encoderOffset = RobotConstants.ElevatorEncoderOffset;
-    SparkFlexConfig ElevfatorMotorConfig;
+    SparkFlexConfig ElevatorMotorConfig;
 
     public ElevatorSubsystem() {
         ElevatorMotor = new SparkFlex(RobotConstants.ElevatorMotorCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
-        ElevatorEncoder = new Encoder(RobotConstants.ElevatorEncoderDIOidA, RobotConstants.ElevatorEncoderDIOidB);
+        ElevatorEncoder = ElevatorMotor.getExternalEncoder();
 
     }
 
     public void goTo(double encoderGoal, double extremaValue) {
         if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.goDown();
         } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.goUp();
         } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.goUp();
         } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.goDown();
         } else {
             this.stop();
@@ -41,19 +43,19 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean wentTo(double encoderGoal, double extremaValue) {
         if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.goDown();
             return false;
         } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.goUp();
             return false;
         } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.goUp();
             return false;
         } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.goDown();
             return false;
         } else {
@@ -75,7 +77,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public boolean encoderCheck(double distance) {
-        if (ElevatorEncoder.get() == distance) {
+        if (ElevatorEncoder.getPosition() == distance) {
             return true;
         }
         return false;
@@ -83,6 +85,6 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Wrist Encoder", (ElevatorEncoder.get()));
+        SmartDashboard.putNumber("Wrist Encoder", (ElevatorEncoder.getPosition()));
     }
 }
