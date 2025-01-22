@@ -38,7 +38,7 @@ public class AutonL1Command extends Command {
             extendoSubsystem.stop();
             extendoFinished = true;
         }
-        if (!elevatorFinished && elevatorSubsystem.wentTo(RobotConstants.L1Value, RobotConstants.L1HighExtreme) || timer.get() > 2.5) {
+        if (!elevatorFinished && elevatorSubsystem.lcwentTo(RobotConstants.L1Value) || timer.get() > 2.5) {
             elevatorSubsystem.stop();
             elevatorFinished = true;
         }

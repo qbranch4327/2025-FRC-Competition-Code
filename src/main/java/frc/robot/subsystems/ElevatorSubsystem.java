@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
+
+import au.grapplerobotics.LaserCan;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlexExternalEncoder;
 import edu.wpi.first.wpilibj.Encoder;
@@ -14,7 +17,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     RelativeEncoder ElevatorEncoder;
     private final double rangeOffset = RobotConstants.ElevatorRangeOffset;
     private final double encoderOffset = RobotConstants.ElevatorEncoderOffset;
+    private final double lcrangeOffset = RobotConstants.lcrangeOffset;
     SparkFlexConfig ElevatorMotorConfig;
+    LaserCan lc;
 
     public ElevatorSubsystem() {
         ElevatorMotor = new SparkFlex(RobotConstants.ElevatorMotorCANid,
@@ -23,39 +28,48 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     }
 
-    public void goTo(double encoderGoal, double extremaValue) {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
-            this.goDown();
-        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+    public void goTo(double encoderGoal) {
+        if ((ElevatorEncoder.getPosition()) < (encoderGoal - rangeOffset)) {
             this.goUp();
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
-            this.goUp();
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+        } else if ((ElevatorEncoder.getPosition()) > (encoderGoal + rangeOffset)) {
             this.goDown();
         } else {
             this.stop();
         }
     }
 
-    public boolean wentTo(double encoderGoal, double extremaValue) {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+    
+    public void lcgoTo(double lcGoal) {
+        
+        LaserCan.Measurement measurement = lc.getMeasurement();
+        if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
+            this.goUp();
+        } else if ((measurement.distance_mm) > (lcGoal + rangeOffset)) {
+            this.goDown();
+        } else {
+            this.stop();
+        }
+    }
+
+    public boolean wentTo(double encoderGoal) {
+        if ((ElevatorEncoder.getPosition()) < (encoderGoal - rangeOffset)) {
+            this.goUp();
+            return false;
+        } else if ((ElevatorEncoder.getPosition()) > (encoderGoal + rangeOffset)) {
             this.goDown();
             return false;
-        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        } else {
+            this.stop();
+            return true;
+        }
+    }
+
+    public boolean lcwentTo(double lcGoal) {
+        LaserCan.Measurement measurement = lc.getMeasurement();
+        if ((measurement.distance_mm) < (lcGoal - lcrangeOffset)) {
             this.goUp();
             return false;
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
-            this.goUp();
-            return false;
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (ElevatorEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+        } else if ((measurement.distance_mm) > (lcGoal + lcrangeOffset)) {
             this.goDown();
             return false;
         } else {

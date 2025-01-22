@@ -28,16 +28,16 @@ public class ElevatorCommand extends Command {
         } else if (controller2.getLeftY() > 0.2) {
             elevatorSubsystem.goDown();
         } else if (controller2.getAButton()) { // Dump
-            elevatorSubsystem.goTo(RobotConstants.HomeValue, RobotConstants.HomeValueExtreme);
+            elevatorSubsystem.lcgoTo(RobotConstants.HomeValue);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getXButton()) { // Amp
-            elevatorSubsystem.goTo(RobotConstants.L1Value, RobotConstants.L1HighExtreme);
+            elevatorSubsystem.lcgoTo(RobotConstants.L1Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getYButton()) { // Ground
-            elevatorSubsystem.goTo(RobotConstants.L4Value, RobotConstants.L4HighExtreme);
+            elevatorSubsystem.lcgoTo(RobotConstants.L4Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getBButton()) { // Source
-            elevatorSubsystem.goTo(RobotConstants.L3Value, RobotConstants.L3HighExtreme);
+            elevatorSubsystem.lcgoTo(RobotConstants.L3Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else {
             elevatorSubsystem.stop();

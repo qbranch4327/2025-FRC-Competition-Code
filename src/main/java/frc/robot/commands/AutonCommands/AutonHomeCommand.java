@@ -37,7 +37,7 @@ public class AutonHomeCommand extends Command {
             extendoSubsystem.stop();
             extendoFinished = true;
         }
-        if (!elevatorFinished && elevatorSubsystem.wentTo(RobotConstants.HomeValue, RobotConstants.HomeValueExtreme) || timer.get() > 2.5) {
+        if (!elevatorFinished && elevatorSubsystem.lcwentTo(RobotConstants.HomeValue) || timer.get() > 2.5) {
             elevatorSubsystem.stop();
             elevatorFinished = true;
         }

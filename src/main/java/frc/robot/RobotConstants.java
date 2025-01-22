@@ -38,6 +38,15 @@ public class RobotConstants {
     public final static double L4Value = 4000.0;
     public final static double L4HighExtreme = 4100.0;
 
+     // Elevator Values for encoders - Offsets used to make end values between 0 and
+    // 1
+
+    public final static double lcHomeValue = 0.0;
+    public final static double lcL2Value = 200.0;
+    public final static double lcL3Value = 400.0;
+    public final static double lcL4Value = 600.0;
+    public final static double lcrangeOffset = 10;
+
     // Algae Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
     // Algae Intake in/out of robot

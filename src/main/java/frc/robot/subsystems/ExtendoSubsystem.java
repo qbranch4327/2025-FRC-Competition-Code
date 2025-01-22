@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkRelativeEncoder;
+import com.revrobotics.spark.SparkBase.*;
+import com.revrobotics.*;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -9,22 +12,22 @@ import frc.robot.RobotConstants;
 
 public class ExtendoSubsystem extends SubsystemBase {
     SparkFlex ExtendoMotor;
-    Encoder ExtendoEncoder;
+    RelativeEncoder ExtendoEncoder;
     private final double encoderOffset = RobotConstants.ExtendoEncoderOffset;
     private final double rangeOffset = RobotConstants.ExtendoRangeOffset;
 
     public ExtendoSubsystem() {
         ExtendoMotor = new SparkFlex(RobotConstants.ExtendoMotorCANid, MotorType.kBrushless);
-        ExtendoEncoder = new Encoder(RobotConstants.ExtendoEncoderDIOidA, RobotConstants.ExtendoEncoderDIOidB);
+        ExtendoEncoder = ExtendoMotor.getEncoder();
     }
 
     public void goTo(double degrees) {
 
-        var position = (ExtendoEncoder.get() + encoderOffset) % 1;
+        var position = (ExtendoEncoder.getPosition());
 
-        if (position > (degrees + rangeOffset + encoderOffset) % 1) {
+        if (position > (degrees + rangeOffset)) {
             this.Extend(RobotConstants.ExtendoExtendSpeed);
-        } else if (position < (degrees - rangeOffset + encoderOffset) % 1) {
+        } else if (position < (degrees - rangeOffset)) {
             this.Retract(RobotConstants.ExtendoRetractSpeed);
         } else {
             this.stop();
@@ -33,13 +36,13 @@ public class ExtendoSubsystem extends SubsystemBase {
 
     public boolean wentTo(double degrees) {
 
-        var pos = (ExtendoEncoder.get() + encoderOffset) % 1;
-        var target = (degrees + rangeOffset + encoderOffset) % 1;
+        var pos = (ExtendoEncoder.getPosition());
+        var target = (degrees + rangeOffset);
 
         if (pos > target) {
             this.Extend(RobotConstants.ExtendoExtendSpeed);
             return false;
-        } else if ((ExtendoEncoder.get() + encoderOffset) % 1 < (degrees - rangeOffset + encoderOffset) % 1) {
+        } else if ((ExtendoEncoder.getPosition() < (degrees - rangeOffset))) {
             this.Retract(RobotConstants.ExtendoRetractSpeed);
             return false;
         } else {
@@ -61,7 +64,7 @@ public class ExtendoSubsystem extends SubsystemBase {
     }
 
     public boolean encoderCheck(double distance) {
-        if (ExtendoEncoder.get() == distance) {
+        if (ExtendoEncoder.getPosition() == distance) {
             return true;
         }
         return false;
@@ -69,6 +72,6 @@ public class ExtendoSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Extendo Encoder", (ExtendoEncoder.get()));
+        SmartDashboard.putNumber("Extendo Encoder", (ExtendoEncoder.getPosition()));
     }
 }

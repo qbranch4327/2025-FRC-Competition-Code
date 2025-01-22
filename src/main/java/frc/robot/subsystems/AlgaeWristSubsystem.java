@@ -12,49 +12,29 @@ public class AlgaeWristSubsystem extends SubsystemBase {
     private DutyCycleEncoder wristEncoder;
     private final double rangeOffset = RobotConstants.AlgaeWristrangeOffset;
     private final double encoderOffset = RobotConstants.AlgaeWristencoderOffset;
-    private Encoder wristQuadEncoder;
 
     public AlgaeWristSubsystem() {
         wristMotor = new SparkFlex(RobotConstants.AlgaeWristmotorCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
         wristEncoder = new DutyCycleEncoder(RobotConstants.AlgaeWristEncoderDIOid);
-        wristQuadEncoder = new Encoder(RobotConstants.AlagaeWristQuadEncoder1, RobotConstants.AlagaeWristQuadEncoder2);
     }
 
-    public void goTo(double encoderGoal, double extremaValue) {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+    public void goTo(double encoderGoal) {
+        if ((wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
-        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        } else if ((wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
-            this.extend();
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
-            this.retract();
         } else {
             this.stop();
         }
     }
 
     public boolean wentTo(double encoderGoal, double extremaValue) {
-        if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+        if ((wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
             return false;
-        } else if ((encoderGoal + encoderOffset) % 1 > (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        } else if ((wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
-            return false;
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
-            this.extend();
-            return false;
-        } else if ((encoderGoal + encoderOffset) % 1 < (extremaValue + encoderOffset) % 1
-                && (wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
-            this.retract();
             return false;
         } else {
             this.stop();
