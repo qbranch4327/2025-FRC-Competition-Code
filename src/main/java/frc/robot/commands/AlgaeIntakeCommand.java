@@ -31,9 +31,9 @@ public class AlgaeIntakeCommand extends Command {
             intakeSubsystem.AlgaeIntakeOff();
         }
 
-        if (controller2.getRightX() > 0.2) {
+        if (controller2.getRightY() > 0.2) {
             wristSubsystem.extend();
-        } else if (controller2.getRightX() < -0.2) {
+        } else if (controller2.getRightY() < -0.2) {
             wristSubsystem.retract();
         } else {
             wristSubsystem.stop();

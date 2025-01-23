@@ -99,6 +99,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Wrist Encoder", (ElevatorEncoder.getPosition()));
+        LaserCan.Measurement measurement = lc.getMeasurement();
+        SmartDashboard.putNumber("Elevator Encoder", (ElevatorEncoder.getPosition()));
+        SmartDashboard.putNumber("LaserCAN Distance in mm", (measurement.distance_mm));
     }
 }

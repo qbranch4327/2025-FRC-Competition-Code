@@ -4,14 +4,14 @@ public class RobotConstants {
     // Elevator Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor for moving
     // elevator up and down
-    public final static int ElevatorMotorCANid = 45;
+    public final static int ElevatorMotorCANid = 53;
     public final static int ElevatorEncoderDIOidA = 5;
     public final static int ElevatorEncoderDIOidB = 6;
 
     // Elevator Values for encoders - Offsets used to make end values between 0 and
     // 1
-    public final static double ElevatorEncoderOffset = 20.00;
-    public final static double ElevatorRangeOffset = 1.00;
+    public final static double ElevatorEncoderOffset = 0.00;
+    public final static double ElevatorRangeOffset = 100.00;
 
     // Elevator PID Values for Motors
     public final static double ElevatorMotorP = 0;
@@ -21,7 +21,7 @@ public class RobotConstants {
 
     // Elevator Power values for motors
     public final static double ElevatorUpSpeed = -0.50;
-    public final static double ElevatorDownSpeed = 1.00;
+    public final static double ElevatorDownSpeed = 0.30;
     public final static double ElevatorOffSpeed = 0.00;
 
     // Elevator Values for encoders - Offsets used to make end values between 0 and
@@ -42,15 +42,15 @@ public class RobotConstants {
     // 1
 
     public final static double lcHomeValue = 0.0;
-    public final static double lcL2Value = 200.0;
-    public final static double lcL3Value = 400.0;
-    public final static double lcL4Value = 600.0;
+    public final static double lcL2Value = 250.0;
+    public final static double lcL3Value = 450.0;
+    public final static double lcL4Value = 700.0;
     public final static double lcrangeOffset = 10;
 
     // Algae Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
     // Algae Intake in/out of robot
-    public final static int AlgaeWristmotorCANid = 25;
+    public final static int AlgaeWristmotorCANid = 23;
     public final static int AlgaeWristEncoderDIOid = 1;
     public final static int AlagaeWristQuadEncoder1 = 8;
     public final static int AlagaeWristQuadEncoder2 = 9;
@@ -67,13 +67,13 @@ public class RobotConstants {
     public final static double AlgaeWristrangeOffset = 0.015;
 
     // Algae Wrist Power values for motors
-    public final static double AlgaeWristExtendpower = 0.20;
-    public final static double AlgaeWristRetractpower = -0.20;
+    public final static double AlgaeWristExtendpower = 0.10;
+    public final static double AlgaeWristRetractpower = -0.10;
 
     // Algae Intake Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor Spinning
     // Wheels on Algae Intake
-    public final static int AlgaeIntakeCANid = 22;
+    public final static int AlgaeIntakeCANid = 33;
 
     // Algae Intake PID Values for Motors
     public final static double AlgaeIntakemotorP = 0;
@@ -88,14 +88,14 @@ public class RobotConstants {
 
     // Extendo Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - REV Linear Actuator
-    public final static int ExtendoMotorCANid = 40;
+    public final static int ExtendoMotorCANid = 29;
     public final static int ExtendoEncoderDIOidA = 3;
     public final static int ExtendoEncoderDIOidB = 4;
 
     // Extendo Values for encoders - Offsets used to make end values between 0 and 1
-    public final static double ExtendoEncoderOffset = 20.00;
-    public final static double ExtendoRangeOffset = 1.00;
-    public final static double ExtendoExtend = 1000;
+    public final static double ExtendoEncoderOffset = 0.00;
+    public final static double ExtendoRangeOffset = 1000.00;
+    public final static double ExtendoExtend = 193536;
     public final static double ExtendoRetract = 0.0;
 
     // Extendo PID Values for Motors
@@ -105,14 +105,14 @@ public class RobotConstants {
     public final static double ExtendoMotorFF = 0;
 
     // Extendo Power values for motors
-    public final static double ExtendoExtendSpeed = -0.50;
-    public final static double ExtendoRetractSpeed = 1.00;
+    public final static double ExtendoExtendSpeed = -0.20;
+    public final static double ExtendoRetractSpeed = 0.20;
     public final static double ExtendoOffSpeed = 0.00;
 
     // Coral Intake Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor Spinning
     // Wheels on Algae Intake
-    public final static int CoralIntakeCANid = 28;
+    public final static int CoralIntakeCANid = 22;
     public final static int CoralIntakeSensorDIOid = 7;
 
     // Algae Intake PID Values for Motors
@@ -127,7 +127,6 @@ public class RobotConstants {
     public final static double CoralIntakeSlowspeed = -0.2;
 
     // LED Values
-    public final static double LEDintakesensor = 0.65;
-    public final static double LEDshootersensor = 0.73;
+    public final static double LEDintakesensor = 0.81;
     public final static double LEDdefault = 0.57;
 }

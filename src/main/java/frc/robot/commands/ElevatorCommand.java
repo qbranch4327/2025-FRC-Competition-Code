@@ -31,7 +31,7 @@ public class ElevatorCommand extends Command {
             elevatorSubsystem.lcgoTo(RobotConstants.HomeValue);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getXButton()) { // Amp
-            elevatorSubsystem.lcgoTo(RobotConstants.L1Value);
+            elevatorSubsystem.lcgoTo(RobotConstants.L2Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getYButton()) { // Ground
             elevatorSubsystem.lcgoTo(RobotConstants.L4Value);

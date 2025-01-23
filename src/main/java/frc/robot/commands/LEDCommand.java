@@ -20,7 +20,7 @@ public class LEDCommand extends Command {
 
     @Override
     public void execute() {
-        if (!intakeSubsystem.sensor.get()) {
+        if (!intakeSubsystem.sensor.get() || intakeSubsystem.beambreak.isPressed()) {
             ledSubsystem.set(RobotConstants.LEDintakesensor);
         }
         else {
