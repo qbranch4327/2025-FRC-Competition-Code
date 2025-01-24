@@ -25,10 +25,10 @@ public class ExtendoSubsystem extends SubsystemBase {
 
         var position = (ExtendoEncoder.getPosition());
 
-        if (position > (degrees + rangeOffset)) {
-            this.Extend(RobotConstants.ExtendoExtendSpeed);
-        } else if (position < (degrees - rangeOffset)) {
-            this.Retract(RobotConstants.ExtendoRetractSpeed);
+        if (position < (degrees - rangeOffset)) {
+            this.Extend(RobotConstants.ExtendoRetractSpeed);
+        } else if (position > (degrees + rangeOffset)) {
+            this.Retract(RobotConstants.ExtendoExtendSpeed);
         } else {
             this.stop();
         }

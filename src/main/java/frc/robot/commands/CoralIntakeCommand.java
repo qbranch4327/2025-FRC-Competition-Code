@@ -16,10 +16,12 @@ public class CoralIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (controller2.getRightBumperButton()) {
+        if (controller2.getRightBumperButton() && !intakeSubsystem.beambreak.isPressed()) {
             intakeSubsystem.intakeOn(true);
         } else if (controller2.getLeftBumperButton()) {
             intakeSubsystem.intakeOn(false);
+        } else if (controller2.getLeftBumperButton() && controller2.getRightBumperButton()) {
+            intakeSubsystem.intakeOn(true);
         } else if (controller2.getBackButton()) {
             intakeSubsystem.intakeSlow(true);
         } else if (controller2.getStartButton()) {

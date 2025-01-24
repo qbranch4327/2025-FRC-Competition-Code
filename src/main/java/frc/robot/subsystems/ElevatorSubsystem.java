@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import au.grapplerobotics.LaserCan;
+import au.grapplerobotics.*;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlexExternalEncoder;
@@ -19,13 +20,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final double encoderOffset = RobotConstants.ElevatorEncoderOffset;
     private final double lcrangeOffset = RobotConstants.lcrangeOffset;
     SparkFlexConfig ElevatorMotorConfig;
-    LaserCan lc;
+    private LaserCan lc;
 
     public ElevatorSubsystem() {
         ElevatorMotor = new SparkFlex(RobotConstants.ElevatorMotorCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
         ElevatorEncoder = ElevatorMotor.getExternalEncoder();
-
+        lc = new LaserCan(0);
     }
 
     public void goTo(double encoderGoal) {
@@ -99,8 +100,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        LaserCan.Measurement measurement = lc.getMeasurement();
         SmartDashboard.putNumber("Elevator Encoder", (ElevatorEncoder.getPosition()));
-        SmartDashboard.putNumber("LaserCAN Distance in mm", (measurement.distance_mm));
+        // SmartDashboard.putNumber("LaserCAN Distance in mm", (measurement.distance_mm));
     }
 }

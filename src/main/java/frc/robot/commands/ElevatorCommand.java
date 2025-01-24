@@ -27,17 +27,21 @@ public class ElevatorCommand extends Command {
             elevatorSubsystem.goUp();
         } else if (controller2.getLeftY() > 0.2) {
             elevatorSubsystem.goDown();
+        } else if (controller2.getLeftX() > 0.2) {
+            extendoSubsystem.Extend(RobotConstants.ExtendoExtendSpeed);
+        } else if (controller2.getLeftX() < -0.2) {
+            extendoSubsystem.Extend(RobotConstants.ExtendoRetractSpeed);
         } else if (controller2.getAButton()) { // Dump
-            elevatorSubsystem.lcgoTo(RobotConstants.HomeValue);
-            extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
+            elevatorSubsystem.lcgoTo(RobotConstants.lcHomeValue);
+            extendoSubsystem.goTo(RobotConstants.ExtendoRetract);
         } else if (controller2.getXButton()) { // Amp
-            elevatorSubsystem.lcgoTo(RobotConstants.L2Value);
+            elevatorSubsystem.lcgoTo(RobotConstants.lcL2Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getYButton()) { // Ground
-            elevatorSubsystem.lcgoTo(RobotConstants.L4Value);
+            elevatorSubsystem.lcgoTo(RobotConstants.lcL4Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getBButton()) { // Source
-            elevatorSubsystem.lcgoTo(RobotConstants.L3Value);
+            elevatorSubsystem.lcgoTo(RobotConstants.lcL3Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else {
             elevatorSubsystem.stop();
