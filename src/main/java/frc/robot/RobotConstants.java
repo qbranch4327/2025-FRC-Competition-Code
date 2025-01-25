@@ -94,8 +94,8 @@ public class RobotConstants {
 
     // Extendo Values for encoders - Offsets used to make end values between 0 and 1
     public final static double ExtendoEncoderOffset = 0.00;
-    public final static double ExtendoRangeOffset = 0.3;
-    public final static double ExtendoExtend = -27.8;
+    public final static double ExtendoRangeOffset = -0.3;
+    public final static double ExtendoExtend = -6.0;
     public final static double ExtendoRetract = 0.0;
 
     // Extendo PID Values for Motors

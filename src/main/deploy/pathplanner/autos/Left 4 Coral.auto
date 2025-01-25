@@ -41,7 +41,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonL4Command"
+                  "name": "AutonTimedIntakeCommandShort"
                 }
               }
             ]
@@ -66,7 +66,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonHomeCommand"
+                  "name": "AutonTimedIntakeCommandShort"
                 }
               }
             ]
@@ -91,7 +91,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonL4Command"
+                  "name": "AutonTimedIntakeCommandShort"
                 }
               }
             ]
@@ -116,7 +116,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonHomeCommand"
+                  "name": "AutonTimedIntakeCommandShort"
                 }
               }
             ]
@@ -141,7 +141,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonL4Command"
+                  "name": "AutonTimedIntakeCommandShort"
                 }
               }
             ]
@@ -156,7 +156,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonHomeCommand"
+            "name": "AutonTimedIntakeCommandShort"
           }
         }
       ]

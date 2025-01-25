@@ -45,7 +45,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         LaserCan.Measurement measurement = lc.getMeasurement();
         if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
             this.goUp();
-        } else if ((measurement.distance_mm) > (lcGoal + rangeOffset)) {
+        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset)) {
             this.goDown();
         } else {
             this.stop();

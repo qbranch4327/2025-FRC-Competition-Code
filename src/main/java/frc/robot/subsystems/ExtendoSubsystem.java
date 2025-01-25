@@ -42,7 +42,7 @@ public class ExtendoSubsystem extends SubsystemBase {
         if (pos > target) {
             this.Extend(RobotConstants.ExtendoExtendSpeed);
             return false;
-        } else if ((ExtendoEncoder.getPosition() < (degrees - rangeOffset))) {
+        } else if (pos < target) {
             this.Retract(RobotConstants.ExtendoRetractSpeed);
             return false;
         } else {
