@@ -20,7 +20,7 @@ public class RobotConstants {
     public final static double ElevatorMotorFF = 0;
 
     // Elevator Power values for motors
-    public final static double ElevatorUpSpeed = -0.70;
+    public final static double ElevatorUpSpeed = -1.00;
     public final static double ElevatorDownSpeed = 0.50;
     public final static double ElevatorOffSpeed = 0.00;
 
@@ -63,12 +63,14 @@ public class RobotConstants {
 
     // Algae Wrist Values for encoders - Offsets used to make end values between 0
     // and 1
-    public final static double AlgaeWristencoderOffset = 0.30;
-    public final static double AlgaeWristrangeOffset = 0.015;
+    public final static double AlgaeWristencoderOffset = 0.00;
+    public final static double AlgaeWristrangeOffset = 0.03;
+    public final static double AlgaeWristExtendgoal = 0.489;
+    public final static double AlgaeWristRetractgoal = 0.670;
 
     // Algae Wrist Power values for motors
-    public final static double AlgaeWristExtendpower = -0.40;
-    public final static double AlgaeWristRetractpower = 0.40;
+    public final static double AlgaeWristExtendpower = 0.40;
+    public final static double AlgaeWristRetractpower = -0.40;
 
     // Algae Intake Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor Spinning
@@ -94,7 +96,7 @@ public class RobotConstants {
 
     // Extendo Values for encoders - Offsets used to make end values between 0 and 1
     public final static double ExtendoEncoderOffset = 0.00;
-    public final static double ExtendoRangeOffset = -0.3;
+    public final static double ExtendoRangeOffset = 1.0;
     public final static double ExtendoExtend = -6.0;
     public final static double ExtendoRetract = 0.0;
 
@@ -122,9 +124,9 @@ public class RobotConstants {
     public final static double CoralIntakemotorFF = 0;
 
     // Algae Intake Power values for motors
-    public final static double CoralIntakeOnspeed = -0.80;
-    public final static double CoralIntakeOutspeed = 1.00;
-    public final static double CoralIntakeSlowspeed = -0.2;
+    public final static double CoralIntakeOnspeed = 0.2;
+    public final static double CoralIntakeOutspeed = -0.20;
+    public final static double CoralIntakeSlowspeed = 0.25;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;

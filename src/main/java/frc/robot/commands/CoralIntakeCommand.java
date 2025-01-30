@@ -16,18 +16,26 @@ public class CoralIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (controller2.getRightBumperButton() && !intakeSubsystem.beambreak.isPressed()) {
-            intakeSubsystem.intakeOn(true);
-        } else if (controller2.getLeftBumperButton()) {
-            intakeSubsystem.intakeOn(false);
-        } else if (controller2.getLeftBumperButton() && controller2.getRightBumperButton()) {
-            intakeSubsystem.intakeOn(true);
-        } else if (controller2.getBackButton()) {
-            intakeSubsystem.intakeSlow(true);
-        } else if (controller2.getStartButton()) {
-            intakeSubsystem.intakeSlow(false);
-        } else {
+        if (controller2.getRightBumperButton()){
+            intakeSubsystem.intakeOnBypass();
+        }
+        else if (intakeSubsystem.isBeamBroken()){
+            intakeSubsystem.intakeOff();
+        } 
+        else if (controller2.getLeftBumperButton() && intakeSubsystem.isBeamBroken()){
+            intakeSubsystem.intakeOnBypass();
+        }
+        else {
             intakeSubsystem.intakeOff();
         }
+        // if ((controller2.getRightBumperButton() && !intakeSubsystem.beambreak.isPressed()) || (controller2.getLeftBumper() && intakeSubsystem.beambreak.isPressed())) {
+        //     intakeSubsystem.intakeOn(true);
+        // } else if (controller2.getBackButton()) {
+        //     intakeSubsystem.intakeSlow(true);
+        // } else if (controller2.getStartButton()) {
+        //     intakeSubsystem.intakeSlow(false);
+        // } else {
+        //     intakeSubsystem.intakeOff();
+        // }
     }
 }

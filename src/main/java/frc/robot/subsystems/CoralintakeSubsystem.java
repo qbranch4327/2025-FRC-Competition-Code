@@ -27,6 +27,10 @@ public class CoralintakeSubsystem extends SubsystemBase {
         }
     }
 
+    public void intakeOnBypass() {
+        intakeMotor.set(RobotConstants.CoralIntakeOnspeed);
+    }
+
     public void intakeOff() {
         intakeMotor.stopMotor();
     }
@@ -37,5 +41,9 @@ public class CoralintakeSubsystem extends SubsystemBase {
         } else {
             intakeMotor.set(-RobotConstants.CoralIntakeSlowspeed);
         }
+    }
+
+    public boolean isBeamBroken(){
+        return beambreak.isPressed();
     }
 }

@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkFlexExternalEncoder;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,20 +12,20 @@ import frc.robot.RobotConstants;
 
 public class AlgaeWristSubsystem extends SubsystemBase {
     private SparkFlex wristMotor;
-    private DutyCycleEncoder wristEncoder;
+    private AbsoluteEncoder wristEncoder;
     private final double rangeOffset = RobotConstants.AlgaeWristrangeOffset;
     private final double encoderOffset = RobotConstants.AlgaeWristencoderOffset;
 
     public AlgaeWristSubsystem() {
         wristMotor = new SparkFlex(RobotConstants.AlgaeWristmotorCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
-        wristEncoder = new DutyCycleEncoder(RobotConstants.AlgaeWristEncoderDIOid);
+        wristEncoder = wristMotor.getAbsoluteEncoder();
     }
 
     public void goTo(double encoderGoal) {
-        if ((wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+        if ((wristEncoder.getPosition()) < (encoderGoal - rangeOffset)) {
             this.retract();
-        } else if ((wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        } else if ((wristEncoder.getPosition()) > (encoderGoal + rangeOffset)) {
             this.extend();
         } else {
             this.stop();
@@ -30,10 +33,10 @@ public class AlgaeWristSubsystem extends SubsystemBase {
     }
 
     public boolean wentTo(double encoderGoal, double extremaValue) {
-        if ((wristEncoder.get() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
+        if ((wristEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
             this.retract();
             return false;
-        } else if ((wristEncoder.get() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        } else if ((wristEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
             this.extend();
             return false;
         } else {
@@ -55,7 +58,7 @@ public class AlgaeWristSubsystem extends SubsystemBase {
     }
 
     public boolean encoderCheck(double distance) {
-        if (wristEncoder.get() == distance) {
+        if (wristEncoder.getPosition() == distance) {
             return true;
         }
         return false;
@@ -63,6 +66,6 @@ public class AlgaeWristSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Algae Wrist Encoder", (wristEncoder.get()));
+        SmartDashboard.putNumber("Algae Wrist Encoder", (wristEncoder.getPosition()));
     }
 }
