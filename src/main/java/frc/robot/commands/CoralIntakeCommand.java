@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
 public class CoralIntakeCommand extends Command {
-    CoralintakeSubsystem intakeSubsystem;
+    CoralIntakeSubsystem intakeSubsystem;
     XboxController controller2;
 
-    public CoralIntakeCommand(CoralintakeSubsystem intakeSubsystem, XboxController controller2) {
+    public CoralIntakeCommand(CoralIntakeSubsystem intakeSubsystem, XboxController controller2) {
         this.intakeSubsystem = intakeSubsystem;
         this.controller2 = controller2;
         addRequirements(intakeSubsystem);
@@ -16,14 +16,17 @@ public class CoralIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (controller2.getRightBumperButton()){
-            intakeSubsystem.intakeOnBypass();
+        if (controller2.getLeftBumperButton()){
+            intakeSubsystem.limitSwitchOff(true);
+            intakeSubsystem.intakeOn(true);
         }
-        else if (intakeSubsystem.isBeamBroken()){
-            intakeSubsystem.intakeOff();
-        } 
-        else if (controller2.getLeftBumperButton() && intakeSubsystem.isBeamBroken()){
-            intakeSubsystem.intakeOnBypass();
+        else if (controller2.getRightBumperButton()) {
+            intakeSubsystem.limitSwitchOff(false);
+            intakeSubsystem.intakeOn(true);
+        }
+        else if (controller2.getBackButton()){
+            intakeSubsystem.limitSwitchOff(false);
+            intakeSubsystem.intakeSlow(true);
         }
         else {
             intakeSubsystem.intakeOff();

@@ -4,11 +4,8 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import au.grapplerobotics.LaserCan;
-import au.grapplerobotics.*;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkFlexExternalEncoder;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
@@ -17,7 +14,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     SparkFlex ElevatorMotor;
     RelativeEncoder ElevatorEncoder;
     private final double rangeOffset = RobotConstants.ElevatorRangeOffset;
-    private final double encoderOffset = RobotConstants.ElevatorEncoderOffset;
     private final double lcrangeOffset = RobotConstants.lcrangeOffset;
     SparkFlexConfig ElevatorMotorConfig;
     private LaserCan lc;
@@ -39,16 +35,16 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
     }
 
-    
     public void lcgoTo(double lcGoal) {
-        
+
         LaserCan.Measurement measurement = lc.getMeasurement();
         if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
             System.out.println("The target is " + measurement.distance_mm + "mm away!");
-          } else {
+        } else {
             System.out.println("Oh no! The target is out of range, or we can't get a reliable measurement!");
-            // You can still use distance_mm in here, if you're ok tolerating a clamped value or an unreliable measurement.
-          }
+            // You can still use distance_mm in here, if you're ok tolerating a clamped
+            // value or an unreliable measurement.
+        }
         if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
             this.goUp();
         } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset)) {
@@ -75,10 +71,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         LaserCan.Measurement measurement = lc.getMeasurement();
         if (measurement != null && measurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT) {
             System.out.println("The target is " + measurement.distance_mm + "mm away!");
-          } else {
+        } else {
             System.out.println("Oh no! The target is out of range, or we can't get a reliable measurement!");
-            // You can still use distance_mm in here, if you're ok tolerating a clamped value or an unreliable measurement.
-          }
+            // You can still use distance_mm in here, if you're ok tolerating a clamped
+            // value or an unreliable measurement.
+        }
         if ((measurement.distance_mm) < (lcGoal - lcrangeOffset)) {
             this.goUp();
             return false;
@@ -113,6 +110,5 @@ public class ElevatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder", (ElevatorEncoder.getPosition()));
-        // SmartDashboard.putNumber("LaserCAN Distance in mm", (measurement.distance_mm));
     }
 }

@@ -2,13 +2,13 @@ package frc.robot.commands.AutonCommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.CoralintakeSubsystem;
+import frc.robot.subsystems.CoralIntakeSubsystem;
 
 public class AutonTimedIntakeCommand extends Command {
-    CoralintakeSubsystem intakeSubsystem;
+    CoralIntakeSubsystem intakeSubsystem;
     Timer timer;
 
-    public AutonTimedIntakeCommand(CoralintakeSubsystem intakeSubsystem) {
+    public AutonTimedIntakeCommand(CoralIntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         timer = new Timer();
         addRequirements(intakeSubsystem);

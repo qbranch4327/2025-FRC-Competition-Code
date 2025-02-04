@@ -2,10 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkRelativeEncoder;
-import com.revrobotics.spark.SparkBase.*;
 import com.revrobotics.*;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
@@ -13,7 +10,6 @@ import frc.robot.RobotConstants;
 public class ExtendoSubsystem extends SubsystemBase {
     SparkFlex ExtendoMotor;
     RelativeEncoder ExtendoEncoder;
-    private final double encoderOffset = RobotConstants.ExtendoEncoderOffset;
     private final double rangeOffset = RobotConstants.ExtendoRangeOffset;
 
     public ExtendoSubsystem() {

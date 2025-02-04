@@ -1,5 +1,10 @@
 package frc.robot;
 
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.Distance;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Inches;
+
 public class RobotConstants {
     // Elevator Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor for moving
@@ -65,7 +70,7 @@ public class RobotConstants {
     // and 1
     public final static double AlgaeWristencoderOffset = 0.00;
     public final static double AlgaeWristrangeOffset = 0.03;
-    public final static double AlgaeWristExtendgoal = 0.489;
+    public final static double AlgaeWristExtendgoal = 0.469;
     public final static double AlgaeWristRetractgoal = 0.670;
 
     // Algae Wrist Power values for motors
@@ -84,8 +89,8 @@ public class RobotConstants {
     public final static double AlgaeIntakemotorFF = 0;
 
     // Algae Intake Power values for motors
-    public final static double AlgaeIntakeOnspeed = -1.00;
-    public final static double AlgaeIntakeOutspeed = 1.00;
+    public final static double AlgaeIntakeOnspeed = -0.50;
+    public final static double AlgaeIntakeOutspeed = 0.50;
     public final static double AlgaeIntakeSlowspeed = -0.2;
 
     // Extendo Constants
@@ -107,8 +112,8 @@ public class RobotConstants {
     public final static double ExtendoMotorFF = 0;
 
     // Extendo Power values for motors
-    public final static double ExtendoExtendSpeed = -0.50;
-    public final static double ExtendoRetractSpeed = 0.50;
+    public final static double ExtendoExtendSpeed = -0.30;
+    public final static double ExtendoRetractSpeed = 0.30;
     public final static double ExtendoOffSpeed = 0.00;
 
     // Coral Intake Constants
@@ -126,9 +131,19 @@ public class RobotConstants {
     // Algae Intake Power values for motors
     public final static double CoralIntakeOnspeed = 0.2;
     public final static double CoralIntakeOutspeed = -0.20;
-    public final static double CoralIntakeSlowspeed = 0.25;
+    public final static double CoralIntakeSlowspeed = -0.10;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;
     public final static double LEDdefault = 0.57;
+
+    public static class VisionConstants {
+    public static final String LIMELIGHT_NAME = "";
+    public static final Distance LIMELIGHT_LENS_HEIGHT = Distance.ofBaseUnits(8, Inches);
+    public static final Angle LIMELIGHT_ANGLE = Angle.ofBaseUnits(0, Degrees);
+
+    public static final Distance REEF_APRILTAG_HEIGHT = Distance.ofBaseUnits(6.875, Inches);
+    public static final Distance PROCCESSOR_APRILTAG_HEIGHT = Distance.ofBaseUnits(45.875, Inches);
+    public static final Distance CORAL_APRILTAG_HEIGHT = Distance.ofBaseUnits(53.25, Inches);
+  }
 }

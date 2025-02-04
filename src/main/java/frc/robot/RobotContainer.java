@@ -31,9 +31,10 @@ import frc.robot.commands.AutonCommands.AutonL4Command;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
 import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
+// import frc.robot.commands.VisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.SwerveDrivetrainSubsystem;
-import frc.robot.subsystems.CoralintakeSubsystem;
+import frc.robot.subsystems.CoralIntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -47,9 +48,8 @@ public class RobotContainer {
   // 3/4 of a rotation per second max angular velocity
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
-  private final XboxController driver3 = new XboxController(1);
-  public final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
-
+  private final XboxController xboxController = new XboxController(1);
+  private final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1)
@@ -57,16 +57,57 @@ public class RobotContainer {
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
   private final Telemetry logger = new Telemetry(MaxSpeed);
-
-  private final CoralintakeSubsystem iSub;
+  private final CoralIntakeSubsystem intakeSubsystem;
   private final AlgaeWristSubsystem wristSubsystem;
-  private final VisionSubsystem vSub;
-  private final ExtendoSubsystem rSub;
-  private final LEDSubsystem lSub;
-  private final ElevatorSubsystem eSub;
+  private final ExtendoSubsystem extendoSubsystem;
+  private final LEDSubsystem ledSubsystem;
+  private final ElevatorSubsystem elevatorSubsystem;
   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
+  private final VisionSubsystem visionSubsystem;
+  private final SendableChooser<Command> autoChooser;
+
+  public RobotContainer() {
+    this.intakeSubsystem = new CoralIntakeSubsystem();
+    this.wristSubsystem = new AlgaeWristSubsystem();
+    this.visionSubsystem = new VisionSubsystem();
+    this.extendoSubsystem = new ExtendoSubsystem();
+    this.ledSubsystem = new LEDSubsystem();
+    this.elevatorSubsystem = new ElevatorSubsystem();
+    this.algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
+
+    // Note that X is defined as forward according to WPILib convention,
+    // and Y is defined as to the left according to WPILib convention.
+    commandSwerveDrivetrain.setDefaultCommand(
+        // Drivetrain will execute this command periodically
+        // Drive forward with negative Y (forward)
+        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
+            // Drive left with negative X (left)
+            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
+            // Drive counterclockwise with negative X (left)
+            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+
+    NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(extendoSubsystem, elevatorSubsystem));
+    NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));
+    NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(extendoSubsystem, elevatorSubsystem));
+    NamedCommands.registerCommand("AutonTimedIntakeCommand", new AutonTimedIntakeCommand(intakeSubsystem));
+    NamedCommands.registerCommand("AutonTimedIntakeCommandShort", new AutonTimedIntakeCommandShort(intakeSubsystem));
+    NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(intakeSubsystem));
+    NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOffCommand(intakeSubsystem));
+    NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
+    NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
+
+    autoChooser = AutoBuilder.buildAutoChooser("Auto Calibration 2m");
+    SmartDashboard.putData("Auto Mode", autoChooser);
+
+    algaeIntakeSubsystem
+        .setDefaultCommand(new AlgaeIntakeCommand(algaeIntakeSubsystem, wristSubsystem, xboxController));
+    elevatorSubsystem.setDefaultCommand(new ElevatorCommand(elevatorSubsystem, extendoSubsystem, xboxController));
+    intakeSubsystem.setDefaultCommand(new CoralIntakeCommand(intakeSubsystem, xboxController));
+    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, xboxController, intakeSubsystem));
+    // visionSubsystem.setDefaultCommand(new VisionCommand(visionSubsystem, xboxController));
+    configureBindings();
+  }
 
   private void configureBindings() {
     joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
@@ -86,50 +127,6 @@ public class RobotContainer {
     commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
   }
 
-  private final SendableChooser<Command> autoChooser;
-
-  public RobotContainer() {
-    this.iSub = new CoralintakeSubsystem();
-    this.wristSubsystem = new AlgaeWristSubsystem();
-    this.vSub = new VisionSubsystem();
-    this.rSub = new ExtendoSubsystem();
-    this.lSub = new LEDSubsystem();
-    this.eSub = new ElevatorSubsystem();
-    this.algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
-
-    // Note that X is defined as forward according to WPILib convention,
-    // and Y is defined as to the left according to WPILib convention.
-    commandSwerveDrivetrain.setDefaultCommand(
-        // Drivetrain will execute this command periodically
-        // Drive forward with negative Y (forward)
-        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
-            // Drive left with negative X (left)
-            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
-            // Drive counterclockwise with negative X (left)
-            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
-
-    NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(rSub, eSub));
-    NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(rSub, eSub));
-    NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(rSub, eSub));
-    NamedCommands.registerCommand("AutonTimedIntakeCommand", new AutonTimedIntakeCommand(iSub));
-    NamedCommands.registerCommand("AutonTimedIntakeCommandShort", new AutonTimedIntakeCommandShort(iSub));
-    NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(iSub));
-    NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOffCommand(iSub));
-    NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
-    NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
-
-    autoChooser = AutoBuilder.buildAutoChooser("Auto Calibration 2m");
-    SmartDashboard.putData("Auto Mode", autoChooser);
-
-    algaeIntakeSubsystem.setDefaultCommand(new AlgaeIntakeCommand(algaeIntakeSubsystem, wristSubsystem, driver3));
-    eSub.setDefaultCommand(new ElevatorCommand(eSub, rSub, driver3));
-    iSub.setDefaultCommand(new CoralIntakeCommand(iSub, driver3));
-    lSub.setDefaultCommand(new LEDCommand(lSub, driver3, iSub));
-    // vSub.setDefaultCommand(new VisionCommand);
-
-    configureBindings();
-  }
-
   public Command getAutonomousCommand() {
     /* First put the drivetrain into auto run mode, then run the auto */
     return autoChooser.getSelected();
@@ -137,38 +134,13 @@ public class RobotContainer {
 
   public Command AutonIntakeOn() {
     return new InstantCommand(() -> {
-      iSub.intakeOn(true);
+      intakeSubsystem.intakeOn(true);
     });
   }
 
   public Command AutonIntakeOff() {
     return new InstantCommand(() -> {
-      iSub.intakeOff();
+      intakeSubsystem.intakeOff();
     });
   }
-
-  // public Command AutonShoot()
-  // {
-  // return new InstantCommand(()->{nsSub.newshooterOn();});
-  // }
-
-  // public Command AutonShootAmp()
-  // {
-  // return new InstantCommand(()->{nsSub.newshooterOn();});
-  // }
-
-  // public Command AutonShootOff()
-  // {
-  // return new InstantCommand(()->{nsSub.newstopshooter();});
-  // }
-
-  // public Command AutonIndexMax()
-  // {
-  // return new InstantCommand(()->{nsSub.indexMaxAuton(true);});
-  // }
-
-  // public Command AutonIndexOff()
-  // {
-  // return new InstantCommand(()->{nsSub.indexOff();});
-  // }
 }
