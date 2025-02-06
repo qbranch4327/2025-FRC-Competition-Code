@@ -5,21 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Left A1 - Start to L1 Drop"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left A2 - L1 to Feed"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left A1 - Start to L1 Drop"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              }
+            ]
           }
         },
         {
@@ -35,13 +36,44 @@
               {
                 "type": "path",
                 "data": {
+                  "pathName": "Left A2 - L1 to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
                   "pathName": "Left A3 - Feed to L"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
                 }
               }
             ]
@@ -66,7 +98,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonHomeCommand"
                 }
               }
             ]
@@ -75,7 +107,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -91,7 +123,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
                 }
               }
             ]
@@ -116,7 +154,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonHomeCommand"
                 }
               }
             ]
@@ -125,7 +163,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -141,7 +179,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
                 }
               }
             ]
@@ -156,7 +200,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "name": "AutonHomeCommand"
           }
         }
       ]

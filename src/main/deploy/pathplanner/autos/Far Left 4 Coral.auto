@@ -5,49 +5,13 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Far Left A1 - Start to K"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Far Left A2 - K to Feed"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Far Left A3 - Feed to L"
+                  "pathName": "Far Left A1 - Start to J"
                 }
               },
               {
@@ -66,9 +30,59 @@
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 0.5
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Left A2 - J to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Left A3 - Feed to L"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
           }
         },
         {
@@ -91,15 +105,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -117,6 +125,12 @@
                 "data": {
                   "name": "AutonL4Command"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
               }
             ]
           }
@@ -125,12 +139,6 @@
           "type": "named",
           "data": {
             "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {
@@ -155,13 +163,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -179,6 +181,12 @@
                 "data": {
                   "name": "AutonL4Command"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
               }
             ]
           }
@@ -187,12 +195,6 @@
           "type": "named",
           "data": {
             "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {

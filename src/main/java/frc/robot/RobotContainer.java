@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.commands.AlgaeIntakeCommand;
+import frc.robot.commands.AlignCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.CoralIntakeCommand;
@@ -31,6 +32,7 @@ import frc.robot.commands.AutonCommands.AutonL4Command;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
 import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
+import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandReverse;
 // import frc.robot.commands.VisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.SwerveDrivetrainSubsystem;
@@ -46,7 +48,7 @@ public class RobotContainer {
   // kSpeedAt12Volts desired top speed
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
   // 3/4 of a rotation per second max angular velocity
-  private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
+  private double MaxAngularRate = RotationsPerSecond.of(3.0).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
   private final XboxController xboxController = new XboxController(1);
   private final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
@@ -91,6 +93,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));
     NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(extendoSubsystem, elevatorSubsystem));
     NamedCommands.registerCommand("AutonTimedIntakeCommand", new AutonTimedIntakeCommand(intakeSubsystem));
+    NamedCommands.registerCommand("AutonTimedIntakeCommandReverse", new AutonTimedIntakeCommandReverse(intakeSubsystem));
     NamedCommands.registerCommand("AutonTimedIntakeCommandShort", new AutonTimedIntakeCommandShort(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOffCommand(intakeSubsystem));
@@ -106,6 +109,7 @@ public class RobotContainer {
     intakeSubsystem.setDefaultCommand(new CoralIntakeCommand(intakeSubsystem, xboxController));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, xboxController, intakeSubsystem));
     // visionSubsystem.setDefaultCommand(new VisionCommand(visionSubsystem, xboxController));
+
     configureBindings();
   }
 
@@ -120,6 +124,8 @@ public class RobotContainer {
     joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
     joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
     joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
+
+    joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
 
     // reset the field-centric heading on left bumper press
     joystick.button(13).onTrue(commandSwerveDrivetrain.runOnce(() -> commandSwerveDrivetrain.seedFieldCentric()));

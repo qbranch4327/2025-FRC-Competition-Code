@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralIntakeSubsystem;
 
-public class AutonTimedIntakeCommandShort extends Command {
+public class AutonTimedIntakeCommandReverse extends Command {
     CoralIntakeSubsystem intakeSubsystem;
     Timer timer;
 
-    public AutonTimedIntakeCommandShort(CoralIntakeSubsystem intakeSubsystem) {
+    public AutonTimedIntakeCommandReverse(CoralIntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         timer = new Timer();
         addRequirements(intakeSubsystem);
@@ -21,15 +21,12 @@ public class AutonTimedIntakeCommandShort extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.limitSwitchOff(true);
-        intakeSubsystem.intakeOn(true);
-                
+        intakeSubsystem.intakeOn(false);
     }
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 1.0) {
-            intakeSubsystem.limitSwitchOff(false);
+        if (timer.get() >= 0.2) {
             intakeSubsystem.intakeOff();
             return true;
         }

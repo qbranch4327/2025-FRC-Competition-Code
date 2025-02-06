@@ -46,8 +46,8 @@ public class RobotConstants {
      // Elevator Values for encoders - Offsets used to make end values between 0 and
     // 1
 
-    public final static double lcHomeValue = 0.0;
-    public final static double lcL2Value = 100.0;
+    public final static double lcHomeValue = -15.0;
+    public final static double lcL2Value = 130.0;
     public final static double lcL3Value = 333.0;
     public final static double lcL4Value = 625.0;
     public final static double lcrangeOffset = 10;
@@ -103,6 +103,7 @@ public class RobotConstants {
     public final static double ExtendoEncoderOffset = 0.00;
     public final static double ExtendoRangeOffset = 1.0;
     public final static double ExtendoExtend = -6.0;
+    public final static double ExtendoExtendL4 = -18.8;
     public final static double ExtendoRetract = 0.0;
 
     // Extendo PID Values for Motors
@@ -131,7 +132,7 @@ public class RobotConstants {
     // Algae Intake Power values for motors
     public final static double CoralIntakeOnspeed = 0.2;
     public final static double CoralIntakeOutspeed = -0.20;
-    public final static double CoralIntakeSlowspeed = -0.10;
+    public final static double CoralIntakeSlowspeed = -0.15;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;

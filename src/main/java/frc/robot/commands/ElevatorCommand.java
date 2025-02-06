@@ -39,7 +39,7 @@ public class ElevatorCommand extends Command {
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getYButton()) { // Ground
             elevatorSubsystem.lcgoTo(RobotConstants.lcL4Value);
-            extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
+            extendoSubsystem.goTo(RobotConstants.ExtendoExtendL4);
         } else if (controller2.getBButton()) { // Source
             elevatorSubsystem.lcgoTo(RobotConstants.lcL3Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);

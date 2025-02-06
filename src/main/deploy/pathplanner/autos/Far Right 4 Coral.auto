@@ -5,55 +5,19 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Far Right A1 - Start to C"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Far Right A2 - C to Feed"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Far Right A3 - Feed to C(4)"
+                  "pathName": "Far Right A1 - Start to C"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
                 }
               }
             ]
@@ -66,9 +30,59 @@
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 0.5
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A2 - C to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A3 - Feed to C(4)"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
           }
         },
         {
@@ -84,7 +98,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonHomeCommand"
                 }
               }
             ]
@@ -93,13 +107,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -115,7 +123,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
                 }
               }
             ]
@@ -125,12 +139,6 @@
           "type": "named",
           "data": {
             "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {
@@ -146,7 +154,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonHomeCommand"
                 }
               }
             ]
@@ -155,13 +163,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -177,7 +179,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandShort"
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
                 }
               }
             ]
@@ -190,15 +198,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "name": "AutonHomeCommand"
           }
         }
       ]

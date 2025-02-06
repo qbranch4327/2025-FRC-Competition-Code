@@ -33,7 +33,7 @@ public class AutonL4Command extends Command {
 
     @Override
     public void execute() {
-        if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtend) || timer.get() > 2.5) {
+        if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtendL4) || timer.get() > 2.5) {
             extendoSubsystem.stop();
             extendoFinished = true;
         }
