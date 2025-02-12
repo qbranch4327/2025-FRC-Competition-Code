@@ -7,7 +7,7 @@ public class LEDSubsystem extends SubsystemBase {
     Spark LED;
 
     public LEDSubsystem() {
-        LED = new Spark(1);
+        LED = new Spark(0);
     }
 
     public void set(double powerInput) {

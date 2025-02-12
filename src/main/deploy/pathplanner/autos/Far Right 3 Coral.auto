@@ -1,0 +1,156 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A1 - Start to C"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A2 - C to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A3 - Feed to C(4)"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A4 - C(4) to Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right A5 - Feed to D"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonL4Command"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonTimedIntakeCommandReverse"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonTimedIntakeCommandShort"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonHomeCommand"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

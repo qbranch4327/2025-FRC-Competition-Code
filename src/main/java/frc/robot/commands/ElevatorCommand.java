@@ -43,6 +43,8 @@ public class ElevatorCommand extends Command {
         } else if (controller2.getBButton()) { // Source
             elevatorSubsystem.lcgoTo(RobotConstants.lcL3Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
+        } else if (controller2.getStartButton()){
+            extendoSubsystem.resetEncoder();
         } else {
             elevatorSubsystem.stop();
             extendoSubsystem.stop();
