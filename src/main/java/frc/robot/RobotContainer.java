@@ -33,6 +33,7 @@ import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
 import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandReverse;
+import frc.robot.commands.ClimberCommand;
 // import frc.robot.commands.VisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.SwerveDrivetrainSubsystem;
@@ -41,6 +42,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.AlgaeWristSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
 
@@ -68,6 +70,7 @@ public class RobotContainer {
   private final AlgaeIntakeSubsystem algaeIntakeSubsystem;
   private final VisionSubsystem visionSubsystem;
   private final SendableChooser<Command> autoChooser;
+  private final ClimberSubsystem climberSubsystem;
 
   public RobotContainer() {
     this.intakeSubsystem = new CoralIntakeSubsystem();
@@ -77,17 +80,18 @@ public class RobotContainer {
     this.ledSubsystem = new LEDSubsystem();
     this.elevatorSubsystem = new ElevatorSubsystem();
     this.algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
+    this.climberSubsystem = new ClimberSubsystem();
 
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     commandSwerveDrivetrain.setDefaultCommand(
         // Drivetrain will execute this command periodically
         // Drive forward with negative Y (forward)
-        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
+        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
             // Drive left with negative X (left)
-            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
+            .withVelocityY(joystick.getRawAxis(0) * MaxSpeed)
             // Drive counterclockwise with negative X (left)
-            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+            .withRotationalRate(-joystick.getRawAxis(3) * MaxAngularRate)));
 
     NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(extendoSubsystem, elevatorSubsystem));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));
@@ -108,7 +112,8 @@ public class RobotContainer {
     elevatorSubsystem.setDefaultCommand(new ElevatorCommand(elevatorSubsystem, extendoSubsystem, xboxController));
     intakeSubsystem.setDefaultCommand(new CoralIntakeCommand(intakeSubsystem, xboxController));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, xboxController, intakeSubsystem));
-    // visionSubsystem.setDefaultCommand(new VisionCommand(visionSubsystem, xboxController));
+    visionSubsystem.setDefaultCommand(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
+    climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, joystick));
 
     configureBindings();
   }

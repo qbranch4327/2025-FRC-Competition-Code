@@ -26,7 +26,7 @@ public class RobotConstants {
 
     // Elevator Power values for motors
     public final static double ElevatorUpSpeed = -1.00;
-    public final static double ElevatorDownSpeed = 0.50;
+    public final static double ElevatorDownSpeed = 0.60;
     public final static double ElevatorOffSpeed = 0.00;
 
     // Elevator Values for encoders - Offsets used to make end values between 0 and
@@ -46,11 +46,11 @@ public class RobotConstants {
      // Elevator Values for encoders - Offsets used to make end values between 0 and
     // 1
 
-    public final static double lcHomeValue = -15.0;
-    public final static double lcL2Value = 160.0;
-    public final static double lcL3Value = 358.0;
+    public final static double lcHomeValue = -20.0;
+    public final static double lcL2Value = 90.0;
+    public final static double lcL3Value = 365.0;
     public final static double lcL4Value = 625.0;
-    public final static double lcrangeOffset = 10;
+    public final static double lcrangeOffset = 20;
 
     // Algae Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
@@ -103,7 +103,7 @@ public class RobotConstants {
     public final static double ExtendoEncoderOffset = 0.00;
     public final static double ExtendoRangeOffset = 0.4;
     public final static double ExtendoExtend = -6.0;
-    public final static double ExtendoExtendL4 = -18.8;
+    public final static double ExtendoExtendL4 = -18;
     public final static double ExtendoRetract = 0.2;
 
     // Extendo PID Values for Motors
@@ -114,7 +114,7 @@ public class RobotConstants {
 
     // Extendo Power values for motors
     public final static double ExtendoExtendSpeed = -0.30;
-    public final static double ExtendoRetractSpeed = 0.30;
+    public final static double ExtendoRetractSpeed = 0.20;
     public final static double ExtendoOffSpeed = 0.00;
 
     // Coral Intake Constants
@@ -133,6 +133,35 @@ public class RobotConstants {
     public final static double CoralIntakeOnspeed = 0.3;
     public final static double CoralIntakeOutspeed = -0.25;
     public final static double CoralIntakeSlowspeed = -0.15;
+
+        // Climber Constants
+    // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
+    // Climber in/out of robot
+    public final static int ClimbermotorCANid = 24;
+    public final static int ClimberEncoderDIOid = 1;
+    public final static int ClimberQuadEncoder1 = 8;
+    public final static int ClimberQuadEncoder2 = 9;
+
+    // Climber PID Values for Motors
+    public final static double ClimbermotorP = 0;
+    public final static double ClimbermotorI = 0;
+    public final static double ClimbermotorD = 0;
+    public final static double ClimbermotorFF = 0;
+
+    // Climber Values for encoders - Offsets used to make end values between 0
+    // and 1
+    public final static double ClimberencoderOffset = 0.00;
+    public final static double ClimberrangeOffset = 0.03;
+    public final static double ClimberExtendgoal = 0.469;
+    public final static double ClimberRetractgoal = 0.670;
+    public final static double ClimberClimbgoal = 0;
+    public final static double ClimberReleasegoal = 0;
+
+    // Climber Power values for motors
+    public final static double ClimberExtendpower = 0.40;
+    public final static double ClimberRetractpower = -0.40;
+    public final static double ClimberClimbpower = 0;
+    public final static double ClimberReleasepower = 0;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;

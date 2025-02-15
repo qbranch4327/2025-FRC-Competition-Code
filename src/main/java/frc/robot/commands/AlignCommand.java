@@ -65,7 +65,7 @@ public class AlignCommand extends Command {
       SmartDashboard.putNumber("rotationalPidController", rotationalRate);
       SmartDashboard.putNumber("xPidController", velocityX);
       m_drivetrain.setControl(
-          alignRequest.withRotationalRate(-rotationalRate).withVelocityX(-velocityX));
+          alignRequest.withRotationalRate(-rotationalRate).withVelocityX(velocityX));
  
     } catch (VisionSubsystem.NoSuchTargetException nste) {
       System.out.println("Tag not found");

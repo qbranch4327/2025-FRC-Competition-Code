@@ -26,7 +26,7 @@ public class AutonTimedIntakeCommandReverse extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 0.4) {
+        if (timer.get() >= 0.3) {
             intakeSubsystem.intakeOff();
             return true;
         }

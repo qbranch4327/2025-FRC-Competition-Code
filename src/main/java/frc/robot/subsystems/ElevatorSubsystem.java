@@ -96,6 +96,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         ElevatorMotor.set(RobotConstants.ElevatorDownSpeed);
     }
 
+    public void goDownSlow() {
+        ElevatorMotor.set(RobotConstants.ElevatorDownSpeed * 0.33);
+    }
+
     public void stop() {
         ElevatorMotor.stopMotor();
     }
