@@ -113,7 +113,7 @@ public class RobotContainer {
     intakeSubsystem.setDefaultCommand(new CoralIntakeCommand(intakeSubsystem, xboxController));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, xboxController, intakeSubsystem));
     // visionSubsystem.setDefaultCommand(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
-    climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, joystick));
+    climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, joystick, xboxController));
 
     configureBindings();
   }
