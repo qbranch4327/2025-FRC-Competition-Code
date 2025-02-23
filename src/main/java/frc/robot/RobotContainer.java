@@ -87,11 +87,11 @@ public class RobotContainer {
     commandSwerveDrivetrain.setDefaultCommand(
         // Drivetrain will execute this command periodically
         // Drive forward with negative Y (forward)
-        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
+        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
             // Drive left with negative X (left)
-            .withVelocityY(joystick.getRawAxis(0) * MaxSpeed)
+            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
             // Drive counterclockwise with negative X (left)
-            .withRotationalRate(-joystick.getRawAxis(3) * MaxAngularRate)));
+            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
 
     NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(extendoSubsystem, elevatorSubsystem));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));
@@ -112,25 +112,25 @@ public class RobotContainer {
     elevatorSubsystem.setDefaultCommand(new ElevatorCommand(elevatorSubsystem, extendoSubsystem, xboxController));
     intakeSubsystem.setDefaultCommand(new CoralIntakeCommand(intakeSubsystem, xboxController));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, xboxController, intakeSubsystem));
-    visionSubsystem.setDefaultCommand(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
+    // visionSubsystem.setDefaultCommand(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
     climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, joystick));
 
     configureBindings();
   }
 
   private void configureBindings() {
-    joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
-    joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
-        () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
+    // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
+    // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
+    //     () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
 
     // Run SysId routines when holding back/start and X/Y.
     // Note that each routine should be run exactly once in a single log.
-    joystick.button(1).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kForward));
-    joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
-    joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
-    joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
+    // joystick.button(1).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kForward));
+    // joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
+    // joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
+    // joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
 
-    joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem,6));
+    joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
 
     // reset the field-centric heading on left bumper press
     joystick.button(13).onTrue(commandSwerveDrivetrain.runOnce(() -> commandSwerveDrivetrain.seedFieldCentric()));

@@ -8,6 +8,7 @@ import au.grapplerobotics.LaserCan;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -47,12 +48,15 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
             this.goUp();
-        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset)) {
+        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
             this.goDown();
+        } else if ((measurement.distance_mm) < (lcGoal + rangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
+         this.goDownSlow();
         } else {
             this.stop();
         }
-    }
+        }
+        
 
     public boolean wentTo(double encoderGoal) {
         if ((ElevatorEncoder.getPosition()) < (encoderGoal - rangeOffset)) {
@@ -76,24 +80,31 @@ public class ElevatorSubsystem extends SubsystemBase {
             // You can still use distance_mm in here, if you're ok tolerating a clamped
             // value or an unreliable measurement.
         }
-        if ((measurement.distance_mm) < (lcGoal - lcrangeOffset)) {
+        if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
             this.goUp();
             return false;
-        } else if ((measurement.distance_mm) > (lcGoal + lcrangeOffset)) {
+        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
             this.goDown();
             return false;
+        } else if ((measurement.distance_mm) < (lcGoal + rangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
+         this.goDownSlow();
+         return false;
         } else {
             this.stop();
             return true;
         }
-    }
+        }
 
     public void goUp() {
         ElevatorMotor.set(RobotConstants.ElevatorUpSpeed);
     }
 
     public void goDown() {
+        LaserCan.Measurement measurement = lc.getMeasurement();
+        if ((measurement.distance_mm) >= RobotConstants.lcSlowZone)
         ElevatorMotor.set(RobotConstants.ElevatorDownSpeed);
+        else
+        ElevatorMotor.set(RobotConstants.ElevatorDownSlowSpeed);
     }
 
     public void goDownSlow() {

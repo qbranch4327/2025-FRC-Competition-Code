@@ -25,7 +25,7 @@ class PIDControllerConfigurable extends PIDController {
 public class AlignCommand extends Command {
   private final SwerveDrivetrainSubsystem m_drivetrain;
   private final VisionSubsystem m_Limelight;
-  private final int tagID;
+  // private final int tagID;
 
   private static final PIDControllerConfigurable rotationalPidController = new PIDControllerConfigurable(0.075, 0, 0, 0.01);
   private static final PIDControllerConfigurable xPidController = new PIDControllerConfigurable(0.3, 0.01, 0.01, 0.01);
@@ -33,10 +33,22 @@ public class AlignCommand extends Command {
   private static final SwerveRequest.RobotCentric alignRequest = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   private static final SwerveRequest.Idle idleRequest = new SwerveRequest.Idle();
 
-  public AlignCommand(SwerveDrivetrainSubsystem drivetrain, VisionSubsystem limelight, int TAGID) {
+  private static int tagID = -1;
+  
+  public double rotationalRate = 0;
+  public double velocityX = 0;
+
+  public AlignCommand(SwerveDrivetrainSubsystem drivetrain, VisionSubsystem limelight) {
     this.m_drivetrain = drivetrain;
     this.m_Limelight = limelight;
-    this.tagID = TAGID;
+    addRequirements(m_Limelight);
+  }
+
+  public AlignCommand(SwerveDrivetrainSubsystem drivetrain, VisionSubsystem limelight, int ID) throws IllegalArgumentException{
+    this.m_drivetrain = drivetrain;
+    this.m_Limelight = limelight;
+    if (ID<0){throw new IllegalArgumentException("april tag id cannot be negative");}
+    tagID = ID;
     addRequirements(m_Limelight);
   }
 
@@ -50,11 +62,17 @@ public class AlignCommand extends Command {
     RawFiducial fiducial;
 
     try {
-      fiducial = m_Limelight.getFiducialWithId(this.tagID);
+      if (tagID==-1){
+        fiducial = m_Limelight.getFiducialWithId(m_Limelight.getClosestFiducial().id);
+      }
+      else{
+        fiducial = m_Limelight.getFiducialWithId(tagID);
+      }
 
       final double rotationalRate = rotationalPidController.calculate(2*fiducial.txnc, 0.0) * 0.75* 0.9;
       
-      final double velocityX = xPidController.calculate(fiducial.distToRobot, 0.1) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.7;
+      final double velocityX = xPidController.calculate(fiducial.distToRobot, 0.1) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.0;
+      final double velocityY = yPidController.calculate(fiducial.distToRobot, 0.1) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.2;
         
       if (rotationalPidController.atSetpoint() && xPidController.atSetpoint() && yPidController.atSetpoint()) {
         this.end(true);
@@ -64,8 +82,9 @@ public class AlignCommand extends Command {
       SmartDashboard.putNumber("distToRobot", fiducial.distToRobot);
       SmartDashboard.putNumber("rotationalPidController", rotationalRate);
       SmartDashboard.putNumber("xPidController", velocityX);
+      SmartDashboard.putNumber("yVelocity", velocityY);
       m_drivetrain.setControl(
-          alignRequest.withRotationalRate(-rotationalRate).withVelocityX(velocityX));
+          alignRequest.withRotationalRate(rotationalRate).withVelocityX(velocityX).withVelocityY(velocityY));
  
     } catch (VisionSubsystem.NoSuchTargetException nste) {
       System.out.println("Tag not found");
@@ -74,7 +93,7 @@ public class AlignCommand extends Command {
 
   @Override
   public boolean isFinished() {
-    return rotationalPidController.atSetpoint() && xPidController.atSetpoint();
+    return rotationalPidController.atSetpoint() && yPidController.atSetpoint();
   }
 
   @Override

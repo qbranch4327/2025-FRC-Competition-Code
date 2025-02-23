@@ -28,6 +28,7 @@ public class RobotConstants {
     public final static double ElevatorUpSpeed = -1.00;
     public final static double ElevatorDownSpeed = 0.60;
     public final static double ElevatorOffSpeed = 0.00;
+    public final static double ElevatorDownSlowSpeed = 0.30;
 
     // Elevator Values for encoders - Offsets used to make end values between 0 and
     // 1
@@ -51,6 +52,7 @@ public class RobotConstants {
     public final static double lcL3Value = 365.0;
     public final static double lcL4Value = 625.0;
     public final static double lcrangeOffset = 20;
+    public final static double lcSlowZone = 90.0;
 
     // Algae Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
@@ -113,7 +115,7 @@ public class RobotConstants {
     public final static double ExtendoMotorFF = 0;
 
     // Extendo Power values for motors
-    public final static double ExtendoExtendSpeed = -0.30;
+    public final static double ExtendoExtendSpeed = -0.50;
     public final static double ExtendoRetractSpeed = 0.20;
     public final static double ExtendoOffSpeed = 0.00;
 
