@@ -104,7 +104,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
     NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
 
-    autoChooser = AutoBuilder.buildAutoChooser("Auto Calibration 2m");
+    autoChooser = AutoBuilder.buildAutoChooser("Straight 1 Coral");
     SmartDashboard.putData("Auto Mode", autoChooser);
 
     algaeIntakeSubsystem

@@ -22,7 +22,7 @@ public class CoralIntakeSubsystem extends SubsystemBase {
         intakeMotor = new SparkFlex(RobotConstants.CoralIntakeCANid, MotorType.kBrushless);
         intakeMotorConfig = new SparkFlexConfig();
         sensor = new DigitalInput(RobotConstants.CoralIntakeSensorDIOid);
-        beambreak = intakeMotor.getForwardLimitSwitch();
+        beambreak = intakeMotor.getReverseLimitSwitch();
 
         intakeMotorConfig.limitSwitch
                 .forwardLimitSwitchEnabled(true);
@@ -58,13 +58,13 @@ public class CoralIntakeSubsystem extends SubsystemBase {
 
     public void limitSwitchOff(boolean forward) {
         if (forward) {
-            intakeMotorConfig.limitSwitch.forwardLimitSwitchEnabled(false);
+            intakeMotorConfig.limitSwitch.reverseLimitSwitchEnabled(false);
             intakeMotor.configure(
                     intakeMotorConfig,
                     ResetMode.kNoResetSafeParameters,
                     PersistMode.kNoPersistParameters);
         } else {
-            intakeMotorConfig.limitSwitch.forwardLimitSwitchEnabled(true);
+            intakeMotorConfig.limitSwitch.reverseLimitSwitchEnabled(true);
             intakeMotor.configure(
                     intakeMotorConfig,
                     ResetMode.kNoResetSafeParameters,

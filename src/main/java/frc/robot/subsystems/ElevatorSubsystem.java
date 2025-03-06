@@ -13,17 +13,26 @@ import frc.robot.RobotConstants;
 
 public class ElevatorSubsystem extends SubsystemBase {
     SparkFlex ElevatorMotor;
+    // SparkFlex ElevatorMotor2;
     RelativeEncoder ElevatorEncoder;
     private final double rangeOffset = RobotConstants.ElevatorRangeOffset;
     private final double lcrangeOffset = RobotConstants.lcrangeOffset;
     SparkFlexConfig ElevatorMotorConfig;
+    // SparkFlexConfig ElevatorMotorConfig2;
     private LaserCan lc;
 
     public ElevatorSubsystem() {
         ElevatorMotor = new SparkFlex(RobotConstants.ElevatorMotorCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+        // ElevatorMotor2 = new SparkFlex(RobotConstants.ElevatorMotor2CANid,
+        //         com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
         ElevatorEncoder = ElevatorMotor.getExternalEncoder();
         lc = new LaserCan(0);
+
+        ElevatorMotorConfig = new SparkFlexConfig();
+        // ElevatorMotorConfig2 = new SparkFlexConfig();
+
+        // ElevatorMotorConfig2.follow(ElevatorMotor);
     }
 
     public void goTo(double encoderGoal) {

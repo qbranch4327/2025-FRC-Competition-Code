@@ -10,6 +10,7 @@ public class RobotConstants {
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor for moving
     // elevator up and down
     public final static int ElevatorMotorCANid = 53;
+    public final static int ElevatorMotor2CANid = 54;
     public final static int ElevatorEncoderDIOidA = 5;
     public final static int ElevatorEncoderDIOidB = 6;
 
@@ -48,8 +49,8 @@ public class RobotConstants {
     // 1
 
     public final static double lcHomeValue = -20.0;
-    public final static double lcL2Value = 90.0;
-    public final static double lcL3Value = 365.0;
+    public final static double lcL2Value = 80.0;
+    public final static double lcL3Value = 335.0;
     public final static double lcL4Value = 625.0;
     public final static double lcrangeOffset = 20;
     public final static double lcSlowZone = 90.0;
@@ -72,7 +73,7 @@ public class RobotConstants {
     // and 1
     public final static double AlgaeWristencoderOffset = 0.00;
     public final static double AlgaeWristrangeOffset = 0.03;
-    public final static double AlgaeWristExtendgoal = 0.469;
+    public final static double AlgaeWristExtendgoal = 0.449;
     public final static double AlgaeWristRetractgoal = 0.670;
 
     // Algae Wrist Power values for motors
@@ -105,7 +106,7 @@ public class RobotConstants {
     public final static double ExtendoEncoderOffset = 0.00;
     public final static double ExtendoRangeOffset = 0.4;
     public final static double ExtendoExtend = -6.0;
-    public final static double ExtendoExtendL4 = -18;
+    public final static double ExtendoExtendL4 = -10;
     public final static double ExtendoRetract = 0.2;
 
     // Extendo PID Values for Motors
@@ -115,8 +116,8 @@ public class RobotConstants {
     public final static double ExtendoMotorFF = 0;
 
     // Extendo Power values for motors
-    public final static double ExtendoExtendSpeed = -0.50;
-    public final static double ExtendoRetractSpeed = 0.20;
+    public final static double ExtendoExtendSpeed = -1.00;
+    public final static double ExtendoRetractSpeed = 0.40;
     public final static double ExtendoOffSpeed = 0.00;
 
     // Coral Intake Constants
@@ -132,9 +133,9 @@ public class RobotConstants {
     public final static double CoralIntakemotorFF = 0;
 
     // Algae Intake Power values for motors
-    public final static double CoralIntakeOnspeed = 0.3;
-    public final static double CoralIntakeOutspeed = -0.25;
-    public final static double CoralIntakeSlowspeed = -0.15;
+    public final static double CoralIntakeOnspeed = -0.3;
+    public final static double CoralIntakeOutspeed = 0.25;
+    public final static double CoralIntakeSlowspeed = 0.15;
 
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
