@@ -49,11 +49,11 @@ public class RobotConstants {
     // 1
 
     public final static double lcHomeValue = -20.0;
-    public final static double lcL2Value = 80.0;
-    public final static double lcL3Value = 335.0;
-    public final static double lcL4Value = 625.0;
-    public final static double lcrangeOffset = 20;
-    public final static double lcSlowZone = 90.0;
+    public final static double lcL2Value = 75.0;
+    public final static double lcL3Value = 305.0;
+    public final static double lcL4Value = 615.0;
+    public final static double lcrangeOffset = 10;
+    public final static double lcSlowZone = 30.0;
 
     // Algae Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the

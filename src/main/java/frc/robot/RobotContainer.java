@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.IntSupplier;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -42,6 +45,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.AlgaeWristSubsystem;
+import frc.robot.subsystems.AprilTagManager;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.AlgaeIntakeSubsystem;
@@ -53,7 +57,7 @@ public class RobotContainer {
   private double MaxAngularRate = RotationsPerSecond.of(3.0).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
   private final XboxController xboxController = new XboxController(1);
-  public final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
+  public static final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1)
@@ -71,6 +75,7 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem;
   private final SendableChooser<Command> autoChooser;
   private final ClimberSubsystem climberSubsystem;
+  private final AprilTagManager ATMan;
 
   public RobotContainer() {
     this.intakeSubsystem = new CoralIntakeSubsystem();
@@ -81,6 +86,7 @@ public class RobotContainer {
     this.elevatorSubsystem = new ElevatorSubsystem();
     this.algaeIntakeSubsystem = new AlgaeIntakeSubsystem();
     this.climberSubsystem = new ClimberSubsystem();
+    ATMan = new AprilTagManager(commandSwerveDrivetrain); 
 
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
@@ -118,6 +124,21 @@ public class RobotContainer {
     configureBindings();
   }
 
+     private final IntSupplier OptionalButtonSupplier = ()-> {
+        if(joystick.button(12).getAsBoolean())//button 12 is the bottom right 3 position switch. 
+        {
+            return 2;//2 is the right side option on the reef
+        }
+            //default option is that x is not pressed and we score left side.
+        else return 0;//0 is the left side option on reef
+        
+    };
+
+  public Command alignReefForCoral()
+  {
+      return new ConditionalCommand( ATMan.C_ReefLeftSelectCommand(), ATMan.C_ReefRightSelectCommand(),()->{return OptionalButtonSupplier.getAsInt() == 0;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  }
+
   private void configureBindings() {
     // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
     // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
@@ -130,8 +151,9 @@ public class RobotContainer {
     // joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
     // joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
 
-    joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
-
+    //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
+    joystick.button(1).whileTrue(alignReefForCoral());
+    
     // reset the field-centric heading on left bumper press
     joystick.button(13).onTrue(commandSwerveDrivetrain.runOnce(() -> commandSwerveDrivetrain.seedFieldCentric()));
 

@@ -28,6 +28,10 @@ public class ExtendoSubsystem extends SubsystemBase {
         ExtendoMotorConfig = new SparkFlexConfig();
         ExtendoMotorConfig.limitSwitch
                 .forwardLimitSwitchEnabled(true);
+        ExtendoMotorConfig.softLimit.forwardSoftLimitEnabled(true);
+        ExtendoMotorConfig.softLimit.forwardSoftLimit(0.00);
+        ExtendoMotorConfig.softLimit.reverseSoftLimitEnabled(true);
+        ExtendoMotorConfig.softLimit.reverseSoftLimit(-10.00);
         
     }
 
@@ -86,6 +90,7 @@ public class ExtendoSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        
         SmartDashboard.putNumber("Extendo Encoder", (ExtendoEncoder.getPosition()));
     }
 }
