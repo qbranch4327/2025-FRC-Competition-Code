@@ -25,10 +25,10 @@ public class ClimberCommand extends Command {
     @Override
     public void execute() {
         if (controller2.getPOV() == 0){
-            climberSubsystem.goTo(RobotConstants.ClimberClimbgoal);
+            climberSubsystem.extend();
         }
         else if (controller2.getPOV() == 180){
-            climberSubsystem.goTo(RobotConstants.ClimberReleasegoal);
+            climberSubsystem.retract();
         }
         else{
            climberSubsystem.stop(); 

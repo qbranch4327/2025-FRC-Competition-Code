@@ -53,7 +53,7 @@ public class RobotContainer {
   private double MaxAngularRate = RotationsPerSecond.of(3.0).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
   private final XboxController xboxController = new XboxController(1);
-  private final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
+  public final SwerveDrivetrainSubsystem commandSwerveDrivetrain = TunerConstants.createDrivetrain();
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1)
@@ -87,11 +87,11 @@ public class RobotContainer {
     commandSwerveDrivetrain.setDefaultCommand(
         // Drivetrain will execute this command periodically
         // Drive forward with negative Y (forward)
-        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(4) * MaxSpeed)
+        commandSwerveDrivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
             // Drive left with negative X (left)
-            .withVelocityY(joystick.getRawAxis(3) * MaxSpeed)
+            .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
             // Drive counterclockwise with negative X (left)
-            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+            .withRotationalRate(joystick.getRawAxis(0) * MaxAngularRate)));
 
     NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(extendoSubsystem, elevatorSubsystem));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));

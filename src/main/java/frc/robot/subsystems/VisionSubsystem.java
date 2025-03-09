@@ -21,11 +21,11 @@ public class VisionSubsystem extends SubsystemBase {
   public void config() {
     LimelightHelpers.setCameraPose_RobotSpace(
         "",
-        0.3828, 
-        0.0,
-        0.3429,
+        0.3556, 
+        0.01,
+        0.190,
         0,
-        -2,
+        -10,
         0);
     LimelightHelpers.SetFiducialIDFiltersOverride("", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
   }

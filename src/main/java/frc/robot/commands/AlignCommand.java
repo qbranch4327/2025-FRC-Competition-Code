@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.SwerveDrivetrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.LimelightHelpers;
 import frc.robot.LimelightHelpers.RawFiducial;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose3d;
 class PIDControllerConfigurable extends PIDController {
   public PIDControllerConfigurable(double kP, double kI, double kD) {
       super(kP, kI, kD);
@@ -60,7 +62,7 @@ public class AlignCommand extends Command {
   public void execute() {
     
     RawFiducial fiducial;
-
+    Pose3d TagFromRobot = LimelightHelpers.getTargetPose3d_RobotSpace("limelight");
     try {
       if (tagID==-1){
         fiducial = m_Limelight.getFiducialWithId(m_Limelight.getClosestFiducial().id);

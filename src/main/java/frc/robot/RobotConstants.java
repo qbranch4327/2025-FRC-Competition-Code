@@ -163,8 +163,8 @@ public class RobotConstants {
     // Climber Power values for motors
     public final static double ClimberExtendpower = 0.40;
     public final static double ClimberRetractpower = -0.40;
-    public final static double ClimberClimbpower = 0;
-    public final static double ClimberReleasepower = 0;
+    public final static double ClimberClimbpower = 0.50;
+    public final static double ClimberReleasepower = -0.50;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;
