@@ -55,13 +55,17 @@ public class ElevatorSubsystem extends SubsystemBase {
             // You can still use distance_mm in here, if you're ok tolerating a clamped
             // value or an unreliable measurement.
         }
-        if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
+        if (measurement != null){
+        if ((measurement.distance_mm) < (lcGoal - lcrangeOffset)) {
             this.goUp();
-        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
+        } else if ((measurement.distance_mm) >= (lcGoal + lcrangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
             this.goDown();
-        } else if ((measurement.distance_mm) < (lcGoal + rangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
+        } else if ((measurement.distance_mm) < (lcGoal + lcrangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
          this.goDownSlow();
         } else {
+            this.stop();
+        }}
+        else {
             this.stop();
         }
         }
@@ -89,18 +93,24 @@ public class ElevatorSubsystem extends SubsystemBase {
             // You can still use distance_mm in here, if you're ok tolerating a clamped
             // value or an unreliable measurement.
         }
-        if ((measurement.distance_mm) < (lcGoal - rangeOffset)) {
+        if ((measurement != null)){
+        if ((measurement.distance_mm) < (lcGoal - lcrangeOffset)) {
             this.goUp();
             return false;
-        } else if ((measurement.distance_mm) >= (lcGoal + rangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
+        } else if ((measurement.distance_mm) >= (lcGoal + lcrangeOffset) && (measurement.distance_mm) >= RobotConstants.lcSlowZone) {
             this.goDown();
             return false;
-        } else if ((measurement.distance_mm) < (lcGoal + rangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
+        } else if ((measurement.distance_mm) < (lcGoal + lcrangeOffset) && (measurement.distance_mm) < RobotConstants.lcSlowZone) {
          this.goDownSlow();
          return false;
         } else {
             this.stop();
             return true;
+        }
+    }
+        else {
+            this.stop();
+            return false;
         }
         }
 
@@ -110,11 +120,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public void goDown() {
         LaserCan.Measurement measurement = lc.getMeasurement();
+        if(measurement != null){
         if ((measurement.distance_mm) >= RobotConstants.lcSlowZone)
         ElevatorMotor.set(RobotConstants.ElevatorDownSpeed);
         else
         ElevatorMotor.set(RobotConstants.ElevatorDownSlowSpeed);
     }
+    else
+    ElevatorMotor.set(RobotConstants.ElevatorDownSpeed);
+}
 
     public void goDownSlow() {
         ElevatorMotor.set(RobotConstants.ElevatorDownSpeed * 0.33);
@@ -133,6 +147,9 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        LaserCan.Measurement measurement = lc.getMeasurement();
+
         SmartDashboard.putNumber("Elevator Encoder", (ElevatorEncoder.getPosition()));
+        SmartDashboard.putNumber("Elevatore Distance mm", (measurement.distance_mm));
     }
 }

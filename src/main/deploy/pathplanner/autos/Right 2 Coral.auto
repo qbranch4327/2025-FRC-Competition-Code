@@ -19,6 +19,12 @@
                 "data": {
                   "name": "AutonL4Command"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonExtend"
+                }
               }
             ]
           }
@@ -42,6 +48,12 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "AutonRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "AutonHomeCommand"
                 }
               }
@@ -51,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonTimedIntakeCommand"
+            "name": "AutonIntakeOnCommand"
           }
         },
         {
@@ -73,6 +85,12 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "AutonExtend"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "AutonTimedIntakeCommandReverse"
                 }
               }
@@ -86,9 +104,34 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AutonHomeCommand"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right A4 - C To Feed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOnCommand"
+                }
+              }
+            ]
           }
         }
       ]

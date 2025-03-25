@@ -36,6 +36,7 @@ public class RobotConstants {
 
     public final static double HomeValue = 0.0;
     public final static double HomeValueExtreme = -50.0;
+    public final static double ExtendoClearValue = 80.0;
     public final static double L1Value = 200.0;
     public final static double L1HighExtreme = 220.0;
     public final static double L2Value = 1000.0;
@@ -49,10 +50,10 @@ public class RobotConstants {
     // 1
 
     public final static double lcHomeValue = -20.0;
-    public final static double lcL2Value = 75.0;
-    public final static double lcL3Value = 305.0;
-    public final static double lcL4Value = 615.0;
-    public final static double lcrangeOffset = 10;
+    public final static double lcL2Value = 170.0;
+    public final static double lcL3Value = 400.0;
+    public final static double lcL4Value = 575.0;
+    public final static double lcrangeOffset = 50;
     public final static double lcSlowZone = 30.0;
 
     // Algae Wrist Constants
@@ -104,10 +105,10 @@ public class RobotConstants {
 
     // Extendo Values for encoders - Offsets used to make end values between 0 and 1
     public final static double ExtendoEncoderOffset = 0.00;
-    public final static double ExtendoRangeOffset = 0.4;
-    public final static double ExtendoExtend = -6.0;
-    public final static double ExtendoExtendL4 = -10;
-    public final static double ExtendoRetract = 0.2;
+    public final static double ExtendoRangeOffset = 0.03;
+    public final static double ExtendoExtend = 0.000;
+    public final static double ExtendoExtendL4 = 0.800;
+    public final static double ExtendoRetract = 0.542;
 
     // Extendo PID Values for Motors
     public final static double ExtendoMotorP = 0;
@@ -116,8 +117,8 @@ public class RobotConstants {
     public final static double ExtendoMotorFF = 0;
 
     // Extendo Power values for motors
-    public final static double ExtendoExtendSpeed = -1.00;
-    public final static double ExtendoRetractSpeed = 0.40;
+    public final static double ExtendoExtendSpeed = -0.60;
+    public final static double ExtendoRetractSpeed = 0.400;
     public final static double ExtendoOffSpeed = 0.00;
 
     // Coral Intake Constants

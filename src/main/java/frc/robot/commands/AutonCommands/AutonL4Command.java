@@ -2,30 +2,30 @@ package frc.robot.commands.AutonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotConstants;
-import frc.robot.subsystems.ExtendoSubsystem;
+// import frc.robot.subsystems.ExtendoSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AutonL4Command extends Command {
-    ExtendoSubsystem extendoSubsystem;
+    // ExtendoSubsystem extendoSubsystem;
     ElevatorSubsystem elevatorSubsystem;
     boolean isItFinished;
-    boolean extendoFinished;
+    // boolean extendoFinished;
     boolean elevatorFinished;
     Timer timer;
 
-    public AutonL4Command(ExtendoSubsystem extendoSubsystem, ElevatorSubsystem elevatorSubsystem) {
+    public AutonL4Command(ElevatorSubsystem elevatorSubsystem) {
         timer = new Timer();
-        this.extendoSubsystem = extendoSubsystem;
+        // this.extendoSubsystem = extendoSubsystem;
         this.elevatorSubsystem = elevatorSubsystem;
-        addRequirements(extendoSubsystem);
+        // addRequirements(extendoSubsystem);
         addRequirements(elevatorSubsystem);
     }
 
     @Override
     public void initialize() {
         isItFinished = false;
-        extendoFinished = false;
+        // extendoFinished = false;
         elevatorFinished = false;
         timer.restart();
 
@@ -33,15 +33,15 @@ public class AutonL4Command extends Command {
 
     @Override
     public void execute() {
-        if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtendL4) || timer.get() > 3.5) {
-            extendoSubsystem.stop();
-            extendoFinished = true;
-        }
-        if (!elevatorFinished && elevatorSubsystem.lcwentTo(RobotConstants.lcL4Value) || timer.get() > 3.5) {
+        // if (!extendoFinished && extendoSubsystem.wentTo(RobotConstants.ExtendoExtendL4) || timer.get() > 2.5) {
+        //     extendoSubsystem.stop();
+        //     extendoFinished = true;
+        // }
+        if (!elevatorFinished && elevatorSubsystem.lcwentTo(RobotConstants.lcL4Value) || timer.get() > 2.5) {
             elevatorSubsystem.stop();
             elevatorFinished = true;
         }
-        if (extendoFinished && elevatorFinished) {
+        if (elevatorFinished) {
             isItFinished = true;
         }
     }

@@ -36,6 +36,9 @@ import frc.robot.commands.AutonCommands.AutonTimedIntakeCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandShort;
 import frc.robot.commands.AutonCommands.AutonIntakeOffCommand;
 import frc.robot.commands.AutonCommands.AutonTimedIntakeCommandReverse;
+import frc.robot.commands.AutonCommands.AutonExtend;
+import frc.robot.commands.AutonCommands.AutonRetract;
+
 import frc.robot.commands.ClimberCommand;
 // import frc.robot.commands.VisionCommand;
 import frc.robot.generated.TunerConstants;
@@ -99,9 +102,9 @@ public class RobotContainer {
             // Drive counterclockwise with negative X (left)
             .withRotationalRate(joystick.getRawAxis(0) * MaxAngularRate)));
 
-    NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(extendoSubsystem, elevatorSubsystem));
+    NamedCommands.registerCommand("AutonHomeCommand", new AutonHomeCommand(elevatorSubsystem));
     NamedCommands.registerCommand("AutonL1Command", new AutonL1Command(extendoSubsystem, elevatorSubsystem));
-    NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(extendoSubsystem, elevatorSubsystem));
+    NamedCommands.registerCommand("AutonL4Command", new AutonL4Command(elevatorSubsystem));
     NamedCommands.registerCommand("AutonTimedIntakeCommand", new AutonTimedIntakeCommand(intakeSubsystem));
     NamedCommands.registerCommand("AutonTimedIntakeCommandReverse", new AutonTimedIntakeCommandReverse(intakeSubsystem));
     NamedCommands.registerCommand("AutonTimedIntakeCommandShort", new AutonTimedIntakeCommandShort(intakeSubsystem));
@@ -109,6 +112,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOffCommand(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
     NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
+    NamedCommands.registerCommand("AutonExtend", new AutonExtend(extendoSubsystem));
+    NamedCommands.registerCommand("AutonRetract", new AutonRetract(extendoSubsystem));
+
+
 
     autoChooser = AutoBuilder.buildAutoChooser("Straight 1 Coral");
     SmartDashboard.putData("Auto Mode", autoChooser);

@@ -30,21 +30,19 @@ public class ElevatorCommand extends Command {
         } else if (controller2.getLeftX() > 0.2) {
             extendoSubsystem.Extend(RobotConstants.ExtendoExtendSpeed);
         } else if (controller2.getLeftX() < -0.2) {
-            extendoSubsystem.Extend(RobotConstants.ExtendoRetractSpeed);
+            extendoSubsystem.Retract(RobotConstants.ExtendoRetractSpeed);
         } else if (controller2.getAButton()) { // Dump
             elevatorSubsystem.lcgoTo(RobotConstants.lcHomeValue);
             extendoSubsystem.goTo(RobotConstants.ExtendoRetract);
         } else if (controller2.getXButton()) { // Amp
             elevatorSubsystem.lcgoTo(RobotConstants.lcL2Value);
-            extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
+            // extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else if (controller2.getYButton()) { // Ground
             elevatorSubsystem.lcgoTo(RobotConstants.lcL4Value);
             extendoSubsystem.goTo(RobotConstants.ExtendoExtendL4);
         } else if (controller2.getBButton()) { // Source
             elevatorSubsystem.lcgoTo(RobotConstants.lcL3Value);
-            extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
-        } else if (controller2.getStartButton()){
-            extendoSubsystem.resetEncoder();
+            // extendoSubsystem.goTo(RobotConstants.ExtendoExtend);
         } else {
             elevatorSubsystem.stop();
             extendoSubsystem.stop();

@@ -26,7 +26,7 @@ public class AutonIntakeOnCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (intakeSubsystem.beambreak.isPressed() || timer.get() >= 3) {
+        if (intakeSubsystem.isBeamBroken() || timer.get() >= 2.0) {
             intakeSubsystem.intakeOff();
             return true;
         }

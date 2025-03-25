@@ -25,6 +25,12 @@
                 "data": {
                   "name": "AutonL4Command"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonExtend"
+                }
               }
             ]
           }
@@ -36,15 +42,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AutonHomeCommand"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonRetract"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

@@ -23,13 +23,13 @@ import frc.robot.AlphaBots.NT;
 public class AprilTagManager extends SubsystemBase
   {
     //public static ArrayList<AprilTag> tagList = new ArrayList<AprilTag>(22);
-    public static double RobotDefaultOffset = -8.00;//adds a 1/4 inch extra space at locations. 
+    public static double RobotDefaultOffset = -10.50;//adds a 1/4 inch extra space at locations. 
     public static double bumperthickness = 3.00*2; //real 3.75"
     public static double robotsize = 30.25/2;//size no bumpers divided by 2
     public static double robotmetersdistToCenter = Units.inchesToMeters(RobotDefaultOffset+robotsize+bumperthickness);
 
 
-    public static final double ReefWidthCenterOffset = Units.inchesToMeters(12.94)/2;// used during test Units.inchesToMeters(12.875)/2; //Reef Width CenteronCenter divided in half
+    public static final double ReefWidthCenterOffset = Units.inchesToMeters(21)/2;// used during test Units.inchesToMeters(12.875)/2; //Reef Width CenteronCenter divided in half
     public static final double SourcePickupWidthCenterOffset = Units.inchesToMeters(24)/2; //Reef Width CenteronCenter divided in half
     public static final double ExtraMetersoffsetForAlgaePickup = Units.inchesToMeters(7.25);
     public static final double SourceOffset = Units.inchesToMeters(-0.5); //LIVE

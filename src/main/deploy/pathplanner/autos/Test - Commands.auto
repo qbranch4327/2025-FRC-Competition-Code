@@ -5,36 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "AutonL4Command"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandReverse"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommandShort"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonHomeCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommand"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -47,28 +17,47 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonTimedIntakeCommandReverse"
+                  "name": "AutonExtend"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "AutonTimedIntakeCommandShort"
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonHomeCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonRetract"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutonHomeCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonTimedIntakeCommand"
           }
         },
         {
@@ -86,7 +75,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }
